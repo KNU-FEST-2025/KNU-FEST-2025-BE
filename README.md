@@ -1,4 +1,5 @@
 # KNU-FEST-2025-BE
+2025 경북대학교 대동제 Back-End 레포지토리입니다.
 
 # GitHub Role
 해당 Repository는 다음과 같은 규칙을 따르고 있습니다.
