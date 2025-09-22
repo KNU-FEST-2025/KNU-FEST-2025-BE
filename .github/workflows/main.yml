@@ -1,0 +1,22 @@
+name: CI with Docker
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted 
+
+    steps:
+      # 1. 코드 가져오기
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 2. Gradle 빌드 (JAR 생성)
+      - name: Build Jar with Gradle
+        run: ./gradlew build -x test
+
+      # 3. Docker 이미지 빌드 (DokcerFile을 이용)
+      - name: Build Docker Image
+        run: docker build -t knu-fest-2025-be:latest .
