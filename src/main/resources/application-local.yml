@@ -29,16 +29,6 @@ logging:
 jwt:
   secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
 
-cloud:
-  aws:
-    region:
-      static: ap-northeast-2
-    credentials:
-      access-key: "AKIAQFC264AN5HSFAHOY"
-      secret-key: "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"
-    s3:
-      bucket: "pium-bucket"
-
 kakao:
   client-id: "648fcdc9b3865f050600b4295810e763"
   redirect-uri: "http://localhost:8080/api/v1/oauth/kakao/callback"
