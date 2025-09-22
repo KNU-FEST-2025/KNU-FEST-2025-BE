@@ -41,3 +41,6 @@ google:
   redirect-uri: ${GOOGLE_CALLBACK_URI}
   client-secret: ${GOOGLE_SECRET}
 
+  authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
+  token-uri: ${GOOGLE_TOKEN_URI}
+  user-info-uri: ${GOOGLE_USER_INFO_URI}

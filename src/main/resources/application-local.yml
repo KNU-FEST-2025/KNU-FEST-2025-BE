@@ -3,7 +3,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
+    url: jdbc:mysql://localhost:3306/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
     username: root
     password: 1234
 
@@ -30,21 +30,21 @@ jwt:
   secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
 
 kakao:
-  client-id: "648fcdc9b3865f050600b4295810e763"
-  redirect-uri: "http://localhost:8080/api/v1/oauth/kakao/callback"
+  client-id: ${KAKAO_CLIENT_ID}
+  redirect-uri: ${KAKAO_CALLBACK_URI}
 
-  authorization-uri: "https://kauth.kakao.com/oauth/authorize"
-  token-uri: "https://kauth.kakao.com/oauth/token"
-  user-info-uri: "https://kapi.kakao.com/v2/user/me"
+  authorization-uri: ${KAKAO_AUTH_URI}
+  token-uri: ${KAKAO_TOKEN_URI}
+  user-info-uri: ${KAKAO_USER_INFO_URI}
 
 google:
-  client-id: "508444563994-of6s3lm7ehjt289026qmro8hd1pqgai5.apps.googleusercontent.com"
-  redirect-uri: "http://localhost:8080/api/v1/oauth/google/callback"
-  client-secret: "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"
+  client-id: ${GOOGLE_CLIENT_ID}
+  redirect-uri: ${GOOGLE_CALLBACK_URI}
+  client-secret: ${GOOGLE_SECRET}
 
-  authorization-uri: "https://accounts.google.com/o/oauth2/v2/auth"
-  token-uri: "https://oauth2.googleapis.com/token"
-  user-info-uri: "https://www.googleapis.com/oauth2/v2/userinfo"
+  authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
+  token-uri: ${GOOGLE_TOKEN_URI}
+  user-info-uri: ${GOOGLE_USER_INFO_URI}
 
 
 
