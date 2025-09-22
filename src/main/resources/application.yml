@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pium
+  profiles:
+    active: local
+    group:
+      local:
+        - local
+      dev:
+        - dev

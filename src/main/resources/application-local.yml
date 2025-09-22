@@ -1,0 +1,50 @@
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace
+      SQL: DEBUG
+
+jwt:
+  secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
+
+kakao:
+  client-id: ${KAKAO_CLIENT_ID}
+  redirect-uri: ${KAKAO_CALLBACK_URI}
+
+  authorization-uri: ${KAKAO_AUTH_URI}
+  token-uri: ${KAKAO_TOKEN_URI}
+  user-info-uri: ${KAKAO_USER_INFO_URI}
+
+google:
+  client-id: ${GOOGLE_CLIENT_ID}
+  redirect-uri: ${GOOGLE_CALLBACK_URI}
+  client-secret: ${GOOGLE_SECRET}
+
+  authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
+  token-uri: ${GOOGLE_TOKEN_URI}
+  user-info-uri: ${GOOGLE_USER_INFO_URI}
+
+
+
