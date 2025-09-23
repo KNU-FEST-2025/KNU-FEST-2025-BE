@@ -1,4 +1,39 @@
 package knu.fest.knu.fest.domain.lostItem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequest;
+import knu.fest.knu.fest.domain.lostItem.service.LostItemService;
+import knu.fest.knu.fest.global.annotation.UserId;
+import knu.fest.knu.fest.global.common.ResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+@RestController
+@RequestMapping("api/v1/lostItem")
+@RequiredArgsConstructor
 public class LostItemController {
+
+    private final LostItemService lostItemService;
+
+
+    @Operation(
+            summary = "분실물 게시물 등록",
+            description = "분실물 게시물 등록하는 API입니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 생성 완료: {lostItemId}"),
+            }
+    )
+    @PostMapping
+    public ResponseDto<String> create(
+            @Parameter(hidden = true) @UserId Long userId,
+            @RequestPart("data") CreateLostItmeRequest request,
+            @RequestPart(value = "image", required = false) MultipartFile image
+            ) {
+        String createdId = lostItemService.create(userId, request, image);
+
+        return ResponseDto.ok("게시물 생성 완료: " + createdId);
+    }
 }

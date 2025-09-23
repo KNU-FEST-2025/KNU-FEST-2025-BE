@@ -2,7 +2,6 @@ package knu.fest.knu.fest.domain.lostItem.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.*;
 
@@ -20,6 +19,10 @@ public class LostItem extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 게시글 등록 유저
+    @Column(name = "user_id", nullable = false)
+    private Long user;
+
     // 게시물 내용
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -32,13 +35,20 @@ public class LostItem extends BaseEntity {
     // 사진 파일 경로 (또는 URL)
     private String imagePath;
 
+    // 분실물 상태
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private LostStatus lostStatus;
+
     @Column(name = "lost_at", columnDefinition = "DATE")
     private LocalDate lostAt;
 
     @Builder
-    public LostItem(String content, String imagePath, LocalDate lostAt) {
+    public LostItem(Long user, String content, String imagePath, LocalDate lostAt, LostStatus lostStatus) {
+        this.user = user;
         this.content = content;
         this.imagePath = imagePath;
         this.lostAt = lostAt;
+        this.lostStatus = lostStatus;
     }
 }
