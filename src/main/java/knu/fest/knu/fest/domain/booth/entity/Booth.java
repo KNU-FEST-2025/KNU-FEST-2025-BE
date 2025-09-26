@@ -2,6 +2,8 @@ package knu.fest.knu.fest.domain.booth.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,5 +43,10 @@ public class Booth extends BaseEntity {
         this.name = name;
         this.description = description;
         this.boothNumber = boothNumber;
+    }
+
+    public void update(@NotBlank @Size(max = 120) String name, String description) {
+        if (name != null) this.name = name;
+        if (description != null) this.description = description;
     }
 }
