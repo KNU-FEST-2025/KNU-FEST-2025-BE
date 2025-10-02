@@ -12,9 +12,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateLostItmeRequest {
+public class CreateLostItmeRequestDto {
 
+    private String title;
     private String content;
     private LostStatus lostStatus;
-    private LocalDate lostAt;
+    private LocalDate foundTime;
+    private String location;
+    private String imagePath;
 }

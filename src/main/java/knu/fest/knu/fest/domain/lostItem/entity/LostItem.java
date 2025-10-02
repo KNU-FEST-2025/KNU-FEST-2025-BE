@@ -23,14 +23,17 @@ public class LostItem extends BaseEntity {
     @Column(name = "user_id", nullable = false)
     private Long user;
 
+    // 게시글 제목
+    @Column(name = "titel", nullable = false)
+    private String title;
+
     // 게시물 내용
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     // 어디 주막에서 잃어버렸는지
-//    @NotNull
-//    @Column(nullable = false)
-//    private String location;
+    @Column(nullable = false)
+    private String location;
 
     // 사진 파일 경로 (또는 URL)
     private String imagePath;
@@ -41,14 +44,20 @@ public class LostItem extends BaseEntity {
     private LostStatus lostStatus;
 
     @Column(name = "lost_at", columnDefinition = "DATE")
-    private LocalDate lostAt;
+    private LocalDate foundTime;
 
     @Builder
-    public LostItem(Long user, String content, String imagePath, LocalDate lostAt, LostStatus lostStatus) {
+    public LostItem(Long user,
+                    String title,
+                    String content,
+                    String imagePath,
+                    LocalDate foundTime,
+                    LostStatus lostStatus) {
         this.user = user;
+        this.title = title;
         this.content = content;
         this.imagePath = imagePath;
-        this.lostAt = lostAt;
+        this.foundTime = foundTime;
         this.lostStatus = lostStatus;
     }
 }

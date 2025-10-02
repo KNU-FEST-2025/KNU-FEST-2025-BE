@@ -3,7 +3,7 @@ package knu.fest.knu.fest.domain.lostItem.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequest;
+import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequestDto;
 import knu.fest.knu.fest.domain.lostItem.service.LostItemService;
 import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("api/v1/lostItem")
+@RequestMapping("api/v1/lost-item")
 @RequiredArgsConstructor
 public class LostItemController {
 
@@ -29,10 +29,9 @@ public class LostItemController {
     @PostMapping
     public ResponseDto<String> create(
             @Parameter(hidden = true) @UserId Long userId,
-            @RequestPart("data") CreateLostItmeRequest request,
-            @RequestPart(value = "image", required = false) MultipartFile image
+            @RequestPart("data") CreateLostItmeRequestDto request
             ) {
-        String createdId = lostItemService.create(userId, request, image);
+        String createdId = lostItemService.create(userId, request);
 
         return ResponseDto.ok("게시물 생성 완료: " + createdId);
     }

@@ -1,6 +1,14 @@
+file:
+  upload-dir: /Users/hanjaejun
+
 spring:
   config:
     import: optional:file:.env[.properties]
+
+  servlet:
+    multipart:
+      max-file-size: 20MB       # 개별 파일 최대 용량
+      max-request-size: 25MB
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
