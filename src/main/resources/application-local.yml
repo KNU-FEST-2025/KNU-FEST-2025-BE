@@ -1,5 +1,5 @@
 file:
-  upload-dir: /Users/hanjaejun
+  upload-dir: ${FILE_PATH}
 
 spring:
   config:
