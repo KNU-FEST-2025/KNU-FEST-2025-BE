@@ -5,11 +5,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
     username: root
-    password: 1234
+    password: root
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -45,6 +45,4 @@ google:
   authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
   token-uri: ${GOOGLE_TOKEN_URI}
   user-info-uri: ${GOOGLE_USER_INFO_URI}
-
-
 

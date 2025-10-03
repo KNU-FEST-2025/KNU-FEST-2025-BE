@@ -4,6 +4,7 @@ package knu.fest.knu.fest.domain.booth.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import knu.fest.knu.fest.domain.waiting.entity.Waiting;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,6 +38,21 @@ public class Booth extends BaseEntity {
 
     @Column(nullable = false)
     private Long likeCount = 0L;
+
+    @OneToMany(mappedBy = "booth", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Waiting> waitings = new ArrayList<>();
+
+    public void addWaiting(Waiting waiting) {
+        if (!waitings.contains(waiting)) {
+            waitings.add(waiting);
+            waiting.assignBooth(this);
+        }
+    }
+
+    public void removeWaiting(Waiting waiting) {
+        waitings.remove(waiting);
+        waiting.assignBooth(null);
+    }
 
     @Builder
     public Booth(String name, String description, Integer boothNumber) {
