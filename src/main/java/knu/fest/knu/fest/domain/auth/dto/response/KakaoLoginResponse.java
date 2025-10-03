@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record KakaoLoginResponse(
     @NonNull Long accountId,
     @NonNull String userRole,
