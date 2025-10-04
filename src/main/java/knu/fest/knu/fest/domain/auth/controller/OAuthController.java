@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import knu.fest.knu.fest.domain.auth.dto.request.GoogleLoginRequest;
 import knu.fest.knu.fest.domain.auth.dto.request.KakaoLoginRequest;
 import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginResponse;
+import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginResponse;
 import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.service.GoogleOAuthService;
@@ -30,12 +31,8 @@ public class OAuthController {
             }
     )
     @GetMapping("/google/auth-uri")
-    public ResponseDto<KakaoLoginUrlResponse> googleLoginUrl() {
-        return ResponseDto.ok(
-                KakaoLoginUrlResponse.builder()
-                        .authorizationUrl(googleOAuthService.getGoogleLoginUrl())
-                        .build()
-        );
+    public ResponseDto<GoogleLoginUrlResponse> googleLoginUrl() {
+        return ResponseDto.ok(googleOAuthService.getGoogleLoginUrl());
     }
 
     @Operation(
@@ -77,11 +74,7 @@ public class OAuthController {
     )
     @GetMapping("/kakao/auth-uri")
     public ResponseDto<KakaoLoginUrlResponse> kakaoLoginUri() {
-        return ResponseDto.ok(
-                KakaoLoginUrlResponse.builder()
-                        .authorizationUrl(kakaoOAuthService.getKakaoAuthorizationUrl())
-                        .build()
-        );
+        return ResponseDto.ok(kakaoOAuthService.getKakaoAuthorizationUrl());
     }
 
     @Operation(

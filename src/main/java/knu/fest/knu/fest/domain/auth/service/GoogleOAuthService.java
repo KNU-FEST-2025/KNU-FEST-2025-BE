@@ -3,12 +3,15 @@ package knu.fest.knu.fest.domain.auth.service;
 import knu.fest.knu.fest.domain.auth.dto.google.GoogleUserInfo;
 import knu.fest.knu.fest.domain.auth.dto.request.GoogleLoginRequest;
 import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginResponse;
+import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginResponse;
+import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.repository.AuthRepository;
 import knu.fest.knu.fest.domain.user.entity.Provider;
 import knu.fest.knu.fest.domain.user.entity.User;
 import knu.fest.knu.fest.domain.user.entity.UserRole;
 import knu.fest.knu.fest.domain.user.repository.UserRepository;
+import knu.fest.knu.fest.global.common.ResponseDto;
 import knu.fest.knu.fest.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,13 +57,18 @@ public class GoogleOAuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthRepository authRepository;
 
-    public String getGoogleLoginUrl() {
-        return googleAuthorizationUrl
+    public GoogleLoginUrlResponse getGoogleLoginUrl() {
+
+        String authorizationUrl = googleAuthorizationUrl
                 + "?client_id=" + googleClientId
                 + "&redirect_uri=" + googleRedirectUri
                 + "&response_type=code"
                 + "&scope=openid%20email%20profile"
                 + "&access_type=offline";
+
+        return GoogleLoginUrlResponse.builder()
+                .authorizationUrl(authorizationUrl)
+                .build();
     }
 
     public GoogleLoginResponse processGoogleLogin(GoogleLoginRequest request) {
