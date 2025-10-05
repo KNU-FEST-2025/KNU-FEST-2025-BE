@@ -54,11 +54,22 @@ public class Booth extends BaseEntity {
         waiting.assignBooth(null);
     }
 
+    public void addLike() {
+        this.likeCount += 1;
+    }
+
+    public void removeLike() {
+        if (this.likeCount > 0) {
+            this.likeCount -= 1;
+        }
+    }
+
     @Builder
-    public Booth(String name, String description, Integer boothNumber) {
+    public Booth(String name, String description, Integer boothNumber, Long likeCount) {
         this.name = name;
         this.description = description;
         this.boothNumber = boothNumber;
+        this.likeCount = likeCount;
     }
 
     public void update(@NotBlank @Size(max = 120) String name, String description) {

@@ -1,0 +1,70 @@
+package knu.fest.knu.fest.domain.Like.service;
+
+import knu.fest.knu.fest.domain.Like.controller.dto.LikeRequest;
+import knu.fest.knu.fest.domain.Like.controller.dto.LikeResponse;
+import knu.fest.knu.fest.domain.Like.entity.Like;
+import knu.fest.knu.fest.domain.Like.repository.LikeRepository;
+import knu.fest.knu.fest.domain.booth.entity.Booth;
+import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
+import knu.fest.knu.fest.domain.user.entity.User;
+import knu.fest.knu.fest.domain.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class LikeServiceImpl implements LikeService{
+
+    private final LikeRepository likeRepository;
+    private final UserRepository userRepository;
+    private final BoothRepository boothRepository;
+
+    /**
+     * 좋아요 등록
+     * @param request LikeRequest DTO
+     */
+    @Override
+    public LikeResponse create(LikeRequest request) {
+
+        boolean exists = likeRepository.existsByUserIdAndBoothId(request.userId(), request.boothId());
+        if (exists) {
+            throw new IllegalStateException("이미 좋아요를 누른 부스입니다.");
+        }
+
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        // row-level lock 조회
+        Booth booth = boothRepository.findByIdForUpdate(request.boothId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스입니다."));
+
+        Like like = Like.builder()
+                .user(user)
+                .booth(booth)
+                .build();
+
+        likeRepository.save(like);
+
+        // boothCount + 1
+        booth.addLike();
+        boothRepository.save(booth);
+
+        return new LikeResponse(like.getId(), like.getBooth().getId(), like.getUser().getId(), like.getBooth().getLikeCount());
+    }
+
+    @Override
+    public void delete(LikeRequest request) {
+        Like like = likeRepository.findByUserIdAndBoothId(request.userId(), request.boothId())
+                .orElseThrow(() -> new IllegalStateException("좋아요가 존재하지 않습니다."));
+
+        Booth booth = like.getBooth();
+
+        likeRepository.delete(like);
+
+        booth.removeLike();
+        boothRepository.save(booth);
+    }
+}
