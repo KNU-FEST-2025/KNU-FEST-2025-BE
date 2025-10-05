@@ -33,11 +33,19 @@ public class LikeController {
         return ResponseDto.created(response);
     }
 
+    @Operation(
+            summary = "좋아요 삭제",
+            description = """
+            기존의 좋아요를 삭제합니다.  
+            - 유저ID와 부스ID를 조회해 존재하면 삭제합니다. 
+            - 좋아요가 성공적으로 삭제된다면, 204 noContent를 반환합니다.
+            """
+    )
     @DeleteMapping
-    public ResponseDto<LikeResponse> update(
+    public ResponseDto<LikeResponse> delete(
             @Valid @RequestBody LikeRequest request
     ){
         likeService.delete(request);
-        return ResponseDto.ok(null);
+        return ResponseDto.noContent();
     }
 }

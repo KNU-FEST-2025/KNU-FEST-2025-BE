@@ -60,8 +60,9 @@ public class LikeServiceImpl implements LikeService{
         Like like = likeRepository.findByUserIdAndBoothId(request.userId(), request.boothId())
                 .orElseThrow(() -> new IllegalStateException("좋아요가 존재하지 않습니다."));
 
-        Booth booth = like.getBooth();
-
+        // row-level lock 조회.
+        Booth booth = boothRepository.findByIdForUpdate(like.getBooth().getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스입니다."));
         likeRepository.delete(like);
 
         booth.removeLike();
