@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequestDto;
+import knu.fest.knu.fest.domain.lostItem.dtos.response.LostItemDto;
 import knu.fest.knu.fest.domain.lostItem.dtos.response.ViewLostItemResponseDto;
 import knu.fest.knu.fest.domain.lostItem.service.LostItemService;
 import knu.fest.knu.fest.global.annotation.UserId;
@@ -29,8 +30,7 @@ public class LostItemController {
     )
     @PostMapping
     public ResponseDto<String> create(
-            // @Parameter(hidden = true) @UserId Long userId,
-            @RequestParam Long userId,
+            @Parameter(hidden = true) @UserId Long userId,
             @RequestBody CreateLostItmeRequestDto request
             ) {
         String createdId = lostItemService.create(userId, request);
@@ -42,7 +42,7 @@ public class LostItemController {
             summary = "분실물 게시물 리스트 조회",
             description = "분실물 게시물 조회하는 API입니다.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "게시물 생성 완료: {lostItemId}"),
+                    @ApiResponse(responseCode = "200", description = "게시물 리스트"),
             }
     )
     @GetMapping
@@ -51,4 +51,34 @@ public class LostItemController {
 
         return ResponseDto.ok(response);
     }
+
+    @Operation(
+            summary = "분실물 상세정보 조회",
+            description = "분실물 상세정보 조회하는 API입니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 상세정보"),
+            }
+    )
+    @GetMapping("/{id}")
+    public ResponseDto<LostItemDto> getItem (@PathVariable Long id) {
+        LostItemDto response = lostItemService.getItem(id);
+
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(
+            summary = "분실물 삭제",
+            description = "분실물 삭제하는 API입니다",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "분실물 삭제"),
+            }
+    )
+    @GetMapping("/{id}")
+    public ResponseDto<String> delete (@PathVariable Long id) {
+        String response = lostItemService.delete(id);
+
+        return ResponseDto.ok(response);
+    }
+
+
 }

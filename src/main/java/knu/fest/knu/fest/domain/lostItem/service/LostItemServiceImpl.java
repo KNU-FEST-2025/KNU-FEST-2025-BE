@@ -53,6 +53,29 @@ public class LostItemServiceImpl implements LostItemService{
         return new ViewLostItemResponseDto(result);
     }
 
+    @Override
+    @Transactional
+    public LostItemDto getItem(Long id) {
+        LostItem item = lostItemRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다.: " + id));
+
+        return toDto(item);
+    }
+
+    @Override
+    @Transactional
+    public String delete(Long id) {
+        try{
+            if (lostItemRepository.existsById(id)) {
+                lostItemRepository.deleteById(id);
+                return "삭제 완료";
+            }
+            throw new IllegalArgumentException("해당 게시물이 존재하지 않습니다." + id);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
+    }
+
 
 
 
