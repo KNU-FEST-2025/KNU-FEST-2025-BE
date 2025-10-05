@@ -45,7 +45,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "200", description = "게시물 리스트"),
             }
     )
-    @GetMapping
+    @GetMapping("/user")
     public ResponseDto<ViewLostItemResponseDto> viewAll () {
         ViewLostItemResponseDto response = lostItemService.viewAll();
 
@@ -60,7 +60,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseDto<LostItemDto> getItem (@PathVariable Long id) {
         LostItemDto response = lostItemService.getItem(id);
 
@@ -91,8 +91,9 @@ public class LostItemController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseDto<String> update (@PathVariable Long id,
-                                       @RequestBody CreateLostItmeRequestDto request) {
+    public ResponseDto<String> update (
+            @PathVariable Long id,
+            @RequestBody CreateLostItmeRequestDto request) {
         String response = lostItemService.update(id, request);
 
         return ResponseDto.ok(response);

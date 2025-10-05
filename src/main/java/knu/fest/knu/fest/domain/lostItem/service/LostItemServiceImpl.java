@@ -78,6 +78,7 @@ public class LostItemServiceImpl implements LostItemService{
     @Override
     @Transactional
     public String update(Long id, CreateLostItmeRequestDto request) {
+
         LostItem item = lostItemRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다. id=" + id));
 
