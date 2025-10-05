@@ -73,7 +73,23 @@ public class LostItemServiceImpl implements LostItemService{
         } catch (Exception e) {
             return e.getMessage();
         }
+    }
 
+    @Override
+    @Transactional
+    public String update(Long id, CreateLostItmeRequestDto request) {
+        LostItem item = lostItemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다. id=" + id));
+
+        item.updateItem(request.getTitle(),
+                        request.getContent(),
+                        request.getImagePath(),
+                        request.getFoundTime(),
+                        request.getLostStatus(),
+                        request.getLocation()
+                        );
+
+        return "수정을 완료했습니다.";
     }
 
 

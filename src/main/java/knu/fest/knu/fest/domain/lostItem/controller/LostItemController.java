@@ -57,6 +57,7 @@ public class LostItemController {
             description = "분실물 상세정보 조회하는 API입니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "게시물 상세정보"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
     @GetMapping("/{id}")
@@ -71,11 +72,28 @@ public class LostItemController {
             description = "분실물 삭제하는 API입니다",
             responses = {
                     @ApiResponse(responseCode = "200", description = "분실물 삭제"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseDto<String> delete (@PathVariable Long id) {
         String response = lostItemService.delete(id);
+
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(
+            summary = "분실물 수정",
+            description = "분실물 수정하는 API입니다",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "분실물 수정완료"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
+            }
+    )
+    @PutMapping("/{id}")
+    public ResponseDto<String> update (@PathVariable Long id,
+                                       @RequestBody CreateLostItmeRequestDto request) {
+        String response = lostItemService.update(id, request);
 
         return ResponseDto.ok(response);
     }

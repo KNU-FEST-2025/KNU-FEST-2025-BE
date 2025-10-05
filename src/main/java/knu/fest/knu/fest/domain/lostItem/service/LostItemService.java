@@ -15,4 +15,6 @@ public interface LostItemService {
     LostItemDto getItem(Long id);
 
     String delete(Long id);
+
+    String update(Long id, CreateLostItmeRequestDto request);
 }

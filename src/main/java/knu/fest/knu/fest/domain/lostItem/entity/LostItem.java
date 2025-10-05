@@ -2,6 +2,7 @@ package knu.fest.knu.fest.domain.lostItem.entity;
 
 
 import jakarta.persistence.*;
+import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequestDto;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.*;
 
@@ -55,6 +56,21 @@ public class LostItem extends BaseEntity {
                     LostStatus lostStatus,
                     String location) {
         this.user = user;
+        this.title = title;
+        this.content = content;
+        this.imagePath = imagePath;
+        this.foundTime = foundTime;
+        this.lostStatus = lostStatus;
+        this.location = location;
+    }
+
+    public void updateItem(
+                      String title,
+                      String content,
+                      String imagePath,
+                      LocalDate foundTime,
+                      LostStatus lostStatus,
+                      String location) {
         this.title = title;
         this.content = content;
         this.imagePath = imagePath;
