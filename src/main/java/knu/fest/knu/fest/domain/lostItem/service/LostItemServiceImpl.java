@@ -2,12 +2,17 @@ package knu.fest.knu.fest.domain.lostItem.service;
 
 import jakarta.transaction.Transactional;
 import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequestDto;
+import knu.fest.knu.fest.domain.lostItem.dtos.response.LostItemDto;
+import knu.fest.knu.fest.domain.lostItem.dtos.response.ViewLostItemResponseDto;
 import knu.fest.knu.fest.domain.lostItem.entity.LostItem;
 import knu.fest.knu.fest.domain.lostItem.entity.LostStatus;
 import knu.fest.knu.fest.domain.lostItem.repository.LostItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +38,33 @@ public class LostItemServiceImpl implements LostItemService{
 
         LostItem saved = lostItemRepository.save(lostItem);
         return String.valueOf(saved.getId());
+    }
+
+    @Override
+    @Transactional
+    public ViewLostItemResponseDto viewAll() {
+        List<LostItem> items = lostItemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+
+        List<LostItemDto> result = items.stream()
+                .map(this::toDto)
+                .toList();
+
+        return new ViewLostItemResponseDto(result);
+    }
+
+
+
+
+    private LostItemDto toDto(LostItem e) {
+        return LostItemDto.builder()
+                .id(e.getId())
+                .userId(e.getUser())
+                .title(e.getTitle())
+                .content(e.getContent())
+                .foundTime(e.getFoundTime())       // LocalDateTime 가정
+                .lostStatus(e.getLostStatus())     // enum
+                .createdAt(e.getCreatedAt())       // @CreationTimestamp 가정
+                .updatedAt(e.getModifiedAt())       // @UpdateTimestamp 가정
+                .build();
     }
 }
