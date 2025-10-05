@@ -52,12 +52,15 @@ public class LostItem extends BaseEntity {
                     String content,
                     String imagePath,
                     LocalDate foundTime,
-                    LostStatus lostStatus) {
+                    LostStatus lostStatus,
+                    String location) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.imagePath = imagePath;
         this.foundTime = foundTime;
         this.lostStatus = lostStatus;
+        this.location = location;
+
     }
 }

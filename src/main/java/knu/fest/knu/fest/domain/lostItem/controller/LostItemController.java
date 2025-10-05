@@ -29,7 +29,8 @@ public class LostItemController {
     )
     @PostMapping
     public ResponseDto<String> create(
-            @Parameter(hidden = true) @UserId Long userId,
+            // @Parameter(hidden = true) @UserId Long userId,
+            @RequestParam Long userId,
             @RequestBody CreateLostItmeRequestDto request
             ) {
         String createdId = lostItemService.create(userId, request);

@@ -34,6 +34,7 @@ public class LostItemServiceImpl implements LostItemService{
                 .imagePath(request.getImagePath())
                 .foundTime(request.getFoundTime())
                 .lostStatus(status)
+                .location(request.getLocation())
                 .build();
 
         LostItem saved = lostItemRepository.save(lostItem);
