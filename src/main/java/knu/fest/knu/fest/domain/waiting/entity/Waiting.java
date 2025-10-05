@@ -26,10 +26,6 @@ public class Waiting extends BaseEntity {
     @Column(nullable=false, length=15)
     private String phone;
 
-    @Column(nullable = false)
-    @CreatedDate
-    private LocalDateTime reserveTime;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private WaitingStatus status = WaitingStatus.WAITING;
