@@ -12,7 +12,7 @@ services:
       MYSQL_DATABASE: knufest
       TZ: Asia/Seoul
     volumes:
-      - mysql_data:/var/lib/mysql
+      - /0_services/knu-fest-2025/mysql-data:/var/lib/mysql
     networks:
       - knu-fest-net
 
@@ -23,7 +23,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - /0_services/knu-fest-2025/redis-data:/data
     networks:
       - knu-fest-net
 
@@ -46,10 +46,6 @@ services:
       - /0_services/knu-fest-2025/backend-logs:/app/logs
     networks:
       - knu-fest-net
-
-volumes:
-  mysql_data:
-  redis_data:
 
 networks:
   knu-fest-net:
