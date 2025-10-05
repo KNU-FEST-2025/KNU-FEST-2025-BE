@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class LostItemDto {
     private Long id;
-    private Long userId;
     private String title;
     private String content;
     private LocalDate foundTime;

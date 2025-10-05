@@ -99,7 +99,6 @@ public class LostItemServiceImpl implements LostItemService{
     private LostItemDto toDto(LostItem e) {
         return LostItemDto.builder()
                 .id(e.getId())
-                .userId(e.getUser())
                 .title(e.getTitle())
                 .content(e.getContent())
                 .foundTime(e.getFoundTime())       // LocalDateTime 가정
