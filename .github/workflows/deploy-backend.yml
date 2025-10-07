@@ -1,28 +1,50 @@
-name: Deploy Backend
+name: Continuous Integration / Continuous Deployment
 
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+# invoking condition
 on:
-  push:
+  pull_request: # when pull request is invoked, and it closed.
     branches: [ "main" ]
+    types: closed
+  workflow_dispatch: # trigging in github manually.
+
+    
+permissions: # permit only reading the source code in repository.
+  contents: read
 
 jobs:
-  deploy:
+  # Build SpringBoot Application.
+  build-docker-image:
+    runs-on: self-hosted
+    steps: # Grouping the step of running.
+    - uses: actions/checkout@v3
+    
+    # 1. Give "eXecution" permission to the builder
+    - name: Grant execute permission for gradlew using chmod +x
+      run: chmod +x ./gradlew
+
+    # 2. build this project
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
+    # 4. Make a docker image
+    - name: docker image build
+      run: docker build -t knufest-2025-BE:$(date +%y%m%d) .
+      
+  run-docker-image:
+    # running this step is depend on previous step.
+    needs: build-docker-image
     runs-on: self-hosted
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
+      - name: halt running container
+        run: docker stop knufest-2025_BE 2>/dev/null || true
 
-      - name: Set up environment variables
-        run: |
-          echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "DOMAIN_PATH=${{ secrets.DOMAIN_PATH }}" >> $GITHUB_ENV
+      - name: run container using Docker Compose
+        run: docker compose -f ${{ secrets.DOCKERFILE_PATH }} --env-file ${{ secrets.DOCKERFILE_ENV_PATH }} up -d knufest-2025_BE
 
-      - name: Build and run Docker containers
-        run: docker-compose up --build -d
-
-      - name: Clean up old Docker images
-        if: always()
-        run: docker image prune -f
-
+      - name: remove old image
+        run: docker system prune -f
