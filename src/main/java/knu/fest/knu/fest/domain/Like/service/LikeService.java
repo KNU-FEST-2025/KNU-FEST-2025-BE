@@ -14,6 +14,6 @@ import org.springframework.stereotype.Service;
 
 public interface LikeService {
 
-    LikeResponse create(LikeRequest request);
-    void delete(LikeRequest request);
+    LikeResponse create(Long userId, LikeRequest request);
+    void delete(Long userId, LikeRequest request);
 }

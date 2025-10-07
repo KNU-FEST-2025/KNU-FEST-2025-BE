@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import knu.fest.knu.fest.domain.Like.controller.dto.LikeRequest;
 import knu.fest.knu.fest.domain.Like.controller.dto.LikeResponse;
 import knu.fest.knu.fest.domain.Like.service.LikeService;
+import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,11 @@ public class LikeController {
             """
     )
     @PostMapping
-    public ResponseDto<LikeResponse> create(
+    public ResponseDto<LikeResponse> createBoothLike(
+            @UserId Long userId,
             @Valid @RequestBody LikeRequest request
     ) {
-        LikeResponse response = likeService.create(request);
+        LikeResponse response = likeService.create(userId, request);
         return ResponseDto.created(response);
     }
 
@@ -42,10 +44,11 @@ public class LikeController {
             """
     )
     @DeleteMapping
-    public ResponseDto<LikeResponse> delete(
+    public ResponseDto<Void> deleteBoothLike(
+            @UserId Long userId,
             @Valid @RequestBody LikeRequest request
     ){
-        likeService.delete(request);
+        likeService.delete(userId, request);
         return ResponseDto.noContent();
     }
 }
