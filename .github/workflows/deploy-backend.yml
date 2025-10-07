@@ -28,7 +28,7 @@ jobs:
 
     # 3. Make a docker image
     - name: docker image build
-      run: docker build -t knufest-2025-BE:$(date +%y%m%d) .
+      run: docker image build -t knufest-2025-BE:$(date +%y%m%d) .
       
   run-docker-image:
     # running this step is depend on previous step.
