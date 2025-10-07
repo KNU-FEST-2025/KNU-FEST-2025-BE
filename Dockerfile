@@ -1,5 +1,5 @@
-FROM openjdk:17-jdk
-VOLUME /tmp
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
+COPY . .
+RUN ./gradlew clean build -x test
+ENTRYPOINT ["sh", "-c", "java -jar build/libs/*.jar"]
