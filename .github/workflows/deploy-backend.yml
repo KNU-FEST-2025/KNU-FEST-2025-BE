@@ -19,6 +19,9 @@ jobs:
   # Build SpringBoot Application.
   build-docker-image:
     runs-on: self-hosted
+    env:
+      TZ: Asia/Seoul
+      
     steps: # Grouping the step of running.
     - uses: actions/checkout@v3
     
@@ -34,6 +37,8 @@ jobs:
     # running this step is depend on previous step.
     needs: build-docker-image
     runs-on: self-hosted
+    env:
+      TZ: Asia/Seoul
 
     steps:
       - name: halt running container
