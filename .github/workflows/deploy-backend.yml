@@ -43,4 +43,7 @@ jobs:
         run: docker compose -f ${{ secrets.DOCKERFILE_PATH }} --env-file ${{ secrets.DOCKERFILE_ENV_PATH }} up -d knufest-2025_BE
 
       - name: remove old image
-        run: docker system prune -f
+        run: docker image prune -a
+
+      - name: remove docker cache
+        run: docker buildx prune -f
