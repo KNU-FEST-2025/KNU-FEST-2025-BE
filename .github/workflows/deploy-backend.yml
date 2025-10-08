@@ -41,6 +41,11 @@ jobs:
       TZ: Asia/Seoul
 
     steps:
+      - name: Edit env file
+        run: |
+          sed -i 's/\r$//' ${{ secrets.DOCKERFILE_ENV_PATH }}
+          sed -i "/^KNUFEST_2025_BE_IMG_NAME=/c\KNUFEST_2025_BE_IMG_NAME='knufest-2025-be:$(date +%y%m%d)'" ${{ secrets.DOCKERFILE_ENV_PATH }}
+        
       - name: halt running container
         run: docker stop knufest-2025_BE 2>/dev/null || true
 
