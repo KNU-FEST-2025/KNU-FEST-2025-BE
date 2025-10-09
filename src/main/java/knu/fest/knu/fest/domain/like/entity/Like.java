@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.Like.entity;
+package knu.fest.knu.fest.domain.like.entity;
 
 import jakarta.persistence.*;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "boothLike")
+@Table(name = "booth_likes")
 public class Like extends BaseEntity {
 
     @Id

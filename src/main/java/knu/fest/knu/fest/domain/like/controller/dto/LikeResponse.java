@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.Like.controller.dto;
+package knu.fest.knu.fest.domain.like.controller.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

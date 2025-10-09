@@ -1,9 +1,9 @@
-package knu.fest.knu.fest.domain.Like.service;
+package knu.fest.knu.fest.domain.like.service;
 
-import knu.fest.knu.fest.domain.Like.controller.dto.LikeRequest;
-import knu.fest.knu.fest.domain.Like.controller.dto.LikeResponse;
-import knu.fest.knu.fest.domain.Like.entity.Like;
-import knu.fest.knu.fest.domain.Like.repository.LikeRepository;
+import knu.fest.knu.fest.domain.like.controller.dto.LikeRequest;
+import knu.fest.knu.fest.domain.like.controller.dto.LikeResponse;
+import knu.fest.knu.fest.domain.like.entity.Like;
+import knu.fest.knu.fest.domain.like.repository.LikeRepository;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
 import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
 import knu.fest.knu.fest.domain.user.entity.User;

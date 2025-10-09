@@ -1,11 +1,11 @@
-package knu.fest.knu.fest.domain.Like.controller;
+package knu.fest.knu.fest.domain.like.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import knu.fest.knu.fest.domain.Like.controller.dto.LikeRequest;
-import knu.fest.knu.fest.domain.Like.controller.dto.LikeResponse;
-import knu.fest.knu.fest.domain.Like.service.LikeService;
+import knu.fest.knu.fest.domain.like.controller.dto.LikeRequest;
+import knu.fest.knu.fest.domain.like.controller.dto.LikeResponse;
+import knu.fest.knu.fest.domain.like.service.LikeService;
 import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
