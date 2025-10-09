@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "boothManager")
+@Table(name = "booth_managers")
 public class BoothManager extends BaseEntity {
 
     @Id

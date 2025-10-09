@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "booth")
+@Table(name = "boothes")
 public class Booth extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
