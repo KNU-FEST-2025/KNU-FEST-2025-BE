@@ -6,9 +6,8 @@ concurrency:
 
 # invoking condition
 on:
-  pull_request: # when pull request is invoked, and it closed.
+  push:
     branches: [ "main" ]
-    types: closed
   workflow_dispatch: # trigging in github manually.
 
     
