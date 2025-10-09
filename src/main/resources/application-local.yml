@@ -1,15 +1,16 @@
-
-
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
     username: root
-    password: root
+    password: ${MYSQL_ROOT_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -27,7 +28,7 @@ logging:
       SQL: DEBUG
 
 jwt:
-  secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
+  secret: ${JWT_SECRET}
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
