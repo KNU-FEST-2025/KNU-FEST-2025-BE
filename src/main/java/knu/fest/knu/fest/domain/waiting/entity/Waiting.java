@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,6 +37,20 @@ public class Waiting extends BaseEntity {
 
     public void assignBooth(Booth booth) {
         this.booth = booth;
+    }
+
+    @Builder
+    public Waiting(Booth booth, String nickName, String phone) {
+        this.booth = booth;
+        this.nickName = nickName;
+        this.phone = phone;
+    }
+
+    public void cancel() { this.status = WaitingStatus.CANCELLED; }
+    public void complete() { this.status = WaitingStatus.DONE; }
+    public void update(String nickName, String phone) {
+        this.nickName = nickName;
+        this.phone = phone;
     }
 
 }
