@@ -15,6 +15,7 @@ public enum ErrorCode {
     NOT_FOUND_LIKE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 좋아요입니다."),
     NOT_FOUND_PLACE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 건물입니다."),
     NOT_FOUND_BOOTH(40404, HttpStatus.NOT_FOUND, "존재하지 않는 부스입니다."),
+    NOT_FOUND_WAITING(40405, HttpStatus.NOT_FOUND, "존재하지 않는 웨이팅입니다."),
 
 
     // Invalid Argument Error

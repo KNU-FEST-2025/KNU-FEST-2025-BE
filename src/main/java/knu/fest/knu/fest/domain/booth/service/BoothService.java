@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class BoothService {
@@ -20,7 +18,7 @@ public class BoothService {
     private final BoothRepository boothRepository;
 
     @Transactional
-    public BoothDetailResponse create(BoothCreateRequest request) {
+    public BoothDetailResponse createBooth(BoothCreateRequest request) {
         if (boothRepository.existsByBoothNumber(request.boothNumber())) {
             throw new CommonException(ErrorCode.ALREADY_EXIST_BOOTH_NUMBER);
         }
@@ -30,7 +28,7 @@ public class BoothService {
     }
 
     @Transactional
-    public BoothDetailResponse update(Long id, BoothUpdateRequest request) {
+    public BoothDetailResponse updateBooth(Long id, BoothUpdateRequest request) {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
@@ -40,7 +38,7 @@ public class BoothService {
     }
 
     @Transactional(readOnly = true)
-    public BoothDetailResponse get(Long id) {
+    public BoothDetailResponse getBooth(Long id) {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 

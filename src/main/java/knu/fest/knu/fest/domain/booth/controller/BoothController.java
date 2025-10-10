@@ -30,10 +30,10 @@ public class BoothController {
     )
     @PostMapping
     @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
-    public ResponseDto<BoothDetailResponse> create(
+    public ResponseDto<BoothDetailResponse> createBooth(
             @Valid @RequestBody BoothCreateRequest request
     ) {
-        BoothDetailResponse response = boothService.create(request);
+        BoothDetailResponse response = boothService.createBooth(request);
         return ResponseDto.created(response);
     }
 
@@ -48,11 +48,11 @@ public class BoothController {
     )
     @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseDto<BoothDetailResponse> update(
+    public ResponseDto<BoothDetailResponse> updateBooth(
             @PathVariable Long id,
             @Valid @RequestBody BoothUpdateRequest request
     ) {
-        BoothDetailResponse response = boothService.update(id, request);
+        BoothDetailResponse response = boothService.updateBooth(id, request);
 
         return ResponseDto.ok(response);
     }
@@ -65,10 +65,10 @@ public class BoothController {
             """
     )
     @GetMapping("/{id}")
-    public ResponseDto<BoothDetailResponse> get(
+    public ResponseDto<BoothDetailResponse> getBooth(
             @PathVariable Long id
     ) {
-        BoothDetailResponse response = boothService.get(id);
+        BoothDetailResponse response = boothService.getBooth(id);
 
         return ResponseDto.ok(response);
     }
