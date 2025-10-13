@@ -1,10 +1,13 @@
 package knu.fest.knu.fest.domain.booth.service;
 
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateRequest;
+import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateResponse;
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothDetailResponse;
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothUpdateRequest;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
 import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
+import knu.fest.knu.fest.domain.comment.controller.dto.CommentResponse;
+import knu.fest.knu.fest.domain.comment.repository.CommentRepository;
 import knu.fest.knu.fest.global.exception.CommonException;
 import knu.fest.knu.fest.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +21,17 @@ import java.util.List;
 public class BoothService {
 
     private final BoothRepository boothRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
-    public BoothDetailResponse create(BoothCreateRequest request) {
+    public BoothCreateResponse create(BoothCreateRequest request) {
         if (boothRepository.existsByBoothNumber(request.boothNumber())) {
             throw new CommonException(ErrorCode.ALREADY_EXIST_BOOTH_NUMBER);
         }
         Booth booth = request.toEntity();
+        Booth saved = boothRepository.save(booth);
 
-        return BoothDetailResponse.of(boothRepository.save(booth));
+        return BoothCreateResponse.from(saved);
     }
 
     @Transactional
@@ -35,8 +40,12 @@ public class BoothService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         booth.update(request.name(), request.description());
+        List<CommentResponse> comments = commentRepository.findAllByBoothId(id)
+                .stream()
+                .map(CommentResponse::from)
+                .toList();
 
-        return BoothDetailResponse.of(booth);
+        return BoothDetailResponse.of(booth, comments);
     }
 
     @Transactional(readOnly = true)
@@ -44,7 +53,12 @@ public class BoothService {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
-        return BoothDetailResponse.of(booth);
+        List<CommentResponse> comments = commentRepository.findAllByBoothId(id)
+                .stream()
+                .map(CommentResponse::from)
+                .toList();
+
+        return BoothDetailResponse.of(booth, comments);
     }
 
 /**
