@@ -38,7 +38,7 @@ public class Booth extends BaseEntity {
 
     @Column(nullable = false)
     private Long likeCount = 0L;
-
+/**
     @OneToMany(mappedBy = "booth", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Waiting> waitings = new ArrayList<>();
 
@@ -53,6 +53,7 @@ public class Booth extends BaseEntity {
         waitings.remove(waiting);
         waiting.assignBooth(null);
     }
+*/
 
     public void addLike() {
         this.likeCount += 1;
