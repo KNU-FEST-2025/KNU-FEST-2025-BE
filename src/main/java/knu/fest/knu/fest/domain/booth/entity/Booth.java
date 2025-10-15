@@ -33,10 +33,10 @@ public class Booth extends BaseEntity {
     @Column(name = "booth_number", unique = true, nullable=false)
     private Integer boothNumber;
 
-    @Column(nullable=false)
+    @Column(name = "waiting_count", nullable=false)
     private Long waitingCount = 0L;
 
-    @Column(nullable = false)
+    @Column(name = "like_count", nullable = false)
     private Long likeCount = 0L;
 /**
     @OneToMany(mappedBy = "booth", cascade = CascadeType.ALL, orphanRemoval = true)

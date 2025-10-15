@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pium
+    name: knufest
   profiles:
     active: local
     group:

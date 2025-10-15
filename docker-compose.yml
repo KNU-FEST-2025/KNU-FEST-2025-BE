@@ -11,8 +11,37 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: knufest
       TZ: Asia/Seoul
+    command: [
+      "mysqld",
+      "--server-id=1",
+      "--log-bin=mysql-bin",
+      "--binlog-format=ROW"
+    ]
     volumes:
       - /0_services/knu-fest-2025/mysql-data:/var/lib/mysql
+    networks:
+      - knu-fest-net
+
+  mysql-replica:
+    image: mysql:8.0
+    container_name: mysql_knufest_replica
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: knufest
+      TZ: Asia/Seoul
+    command: [
+      "mysqld",
+      "--server-id=2",
+      "--relay-log=relay-log",
+      "--read-only=1"
+    ]
+    volumes:
+      - /0_services/knu-fest-2025/mysql-replica-data:/var/lib/mysql
+    depends_on:
+      - mysql
     networks:
       - knu-fest-net
 
