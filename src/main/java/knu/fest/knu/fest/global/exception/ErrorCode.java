@@ -14,6 +14,9 @@ public enum ErrorCode {
     NOT_FOUND_POST(40402, HttpStatus.NOT_FOUND, "존재하지 않는 게시물입니다."),
     NOT_FOUND_LIKE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 좋아요입니다."),
     NOT_FOUND_PLACE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 건물입니다."),
+    NOT_FOUND_BOOTH(40404, HttpStatus.NOT_FOUND, "존재하지 않는 부스입니다."),
+    NOT_FOUND_WAITING(40405, HttpStatus.NOT_FOUND, "존재하지 않는 웨이팅입니다."),
+
 
     // Invalid Argument Error
     INVALID_HEADER_ERROR(40000, HttpStatus.BAD_REQUEST, "유효하지 않은 헤더입니다."),
@@ -21,6 +24,7 @@ public enum ErrorCode {
     INVALID_PARAMETER_FORMAT(40001, HttpStatus.BAD_REQUEST, "요청에 유효하지 않은 인자 형식입니다."),
     INVALID_ARGUMENT(40002, HttpStatus.BAD_REQUEST, "유효하지 않은 인자입니다."),
     ALREADY_HAVE_LIKE(40003, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다."),
+    ALREADY_EXIST_BOOTH_NUMBER(40004, HttpStatus.BAD_REQUEST, "이미 존재하는 부스 번호입니다."),
 
     // Access Denied Error
     ACCESS_DENIED(40300, HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),

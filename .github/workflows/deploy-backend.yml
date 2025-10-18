@@ -1,0 +1,58 @@
+name: Continuous Integration / Continuous Deployment
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+# invoking condition
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # trigging in github manually.
+
+    
+permissions: # permit only reading the source code in repository.
+  contents: read
+
+jobs:
+  # Build SpringBoot Application.
+  build-docker-image:
+    runs-on: self-hosted
+    env:
+      TZ: Asia/Seoul
+      
+    steps: # Grouping the step of running.
+    - uses: actions/checkout@v3
+    
+    # 1. Give "eXecution" permission to the builder
+    - name: Grant execute permission for gradlew using chmod +x
+      run: chmod +x ./gradlew
+
+    # 3. Make a docker image
+    - name: docker image build
+      run: docker image build -t knufest-2025-be:$(date +%y%m%d) .
+      
+  run-docker-image:
+    # running this step is depend on previous step.
+    needs: build-docker-image
+    runs-on: self-hosted
+    env:
+      TZ: Asia/Seoul
+
+    steps:
+      - name: Edit env file
+        run: |
+          sed -i 's/\r$//' ${{ secrets.DOCKERFILE_ENV_PATH }}
+          sed -i "/^KNUFEST_2025_BE_IMG_NAME=/c\KNUFEST_2025_BE_IMG_NAME='knufest-2025-be:$(date +%y%m%d)'" ${{ secrets.DOCKERFILE_ENV_PATH }}
+        
+      - name: halt running container
+        run: docker stop knufest-2025_BE 2>/dev/null || true
+
+      - name: run container using Docker Compose
+        run: docker compose -f ${{ secrets.DOCKERFILE_PATH }} --env-file ${{ secrets.DOCKERFILE_ENV_PATH }} up -d knufest-2025_BE
+
+      - name: remove old image
+        run: docker image prune -a --force
+
+      - name: remove docker cache
+        run: docker buildx prune -f

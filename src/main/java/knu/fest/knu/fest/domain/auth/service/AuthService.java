@@ -42,9 +42,7 @@ public class AuthService{
                         .email(request.email())
                         .password(passwordEncoder.encode(request.password()))
                         .nickname(request.nickname())
-                        .profileImageUrl(request.profileImageLink())
                         .role(UserRole.USER)
-                        .provider(Provider.KAKAO)
                         .build()
                 );
     }
