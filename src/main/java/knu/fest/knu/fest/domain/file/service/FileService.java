@@ -76,10 +76,7 @@ public class FileService {
     }
 
     @Transactional
-    public ResponseEntity<Resource> getImage(Long id) throws IOException {
-        LostItem item = lostItemRepository.findById(id).orElseThrow();
-        String p = item.getImagePath();
-
+    public ResponseEntity<Resource> getImage(String p) throws IOException {
         Path path = Paths.get(p).toAbsolutePath().normalize();
         System.out.println(path);
 
