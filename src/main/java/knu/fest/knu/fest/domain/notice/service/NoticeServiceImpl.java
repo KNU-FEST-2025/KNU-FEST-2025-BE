@@ -51,6 +51,14 @@ public class NoticeServiceImpl implements NoticeService{
         return new ViewNoticeResponseDto(result);
     }
 
+    @Override
+    @Transactional
+    public NoticeDto getNotice(Long id) {
+        Notice notice = noticeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+
+        return toDto(notice);
+    }
+
 
 
     private NoticeDto toDto(Notice e) {

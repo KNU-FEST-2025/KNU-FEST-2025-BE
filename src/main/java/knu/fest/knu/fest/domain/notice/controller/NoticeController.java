@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import knu.fest.knu.fest.domain.notice.dtos.request.CreateNoticeRequestDto;
+import knu.fest.knu.fest.domain.notice.dtos.response.NoticeDto;
 import knu.fest.knu.fest.domain.notice.dtos.response.ViewNoticeResponseDto;
 import knu.fest.knu.fest.domain.notice.service.NoticeService;
 import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,20 @@ public class NoticeController {
     @GetMapping("/user")
     public ResponseDto<ViewNoticeResponseDto> viewAll() {
         ViewNoticeResponseDto response = noticeService.viewAll();
+
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(
+            description = "게시물 상세 정보 조회.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 상세정보"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
+            }
+    )
+    @GetMapping("/user/{id}")
+    public ResponseDto<NoticeDto> getNotice (@PathVariable Long id) {
+        NoticeDto response = noticeService.getNotice(id);
 
         return ResponseDto.ok(response);
     }
