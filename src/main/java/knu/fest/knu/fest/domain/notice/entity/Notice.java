@@ -2,6 +2,7 @@ package knu.fest.knu.fest.domain.notice.entity;
 
 
 import jakarta.persistence.*;
+import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.*;
 
 
@@ -11,7 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @Table(name = "notice")
-public class Notice {
+public class Notice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

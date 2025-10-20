@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import knu.fest.knu.fest.domain.notice.dtos.request.CreateNoticeRequestDto;
+import knu.fest.knu.fest.domain.notice.dtos.response.ViewNoticeResponseDto;
 import knu.fest.knu.fest.domain.notice.service.NoticeService;
 import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
@@ -33,6 +34,19 @@ public class NoticeController {
         String createdId = noticeService.create(userId, request);
 
         return ResponseDto.ok("게시물 생성 완료: " + createdId);
+    }
+
+    @Operation(
+            description = "전체 게시물 조회하는 API입니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 리스트"),
+            }
+    )
+    @GetMapping("/user")
+    public ResponseDto<ViewNoticeResponseDto> viewAll() {
+        ViewNoticeResponseDto response = noticeService.viewAll();
+
+        return ResponseDto.ok(response);
     }
 
 }
