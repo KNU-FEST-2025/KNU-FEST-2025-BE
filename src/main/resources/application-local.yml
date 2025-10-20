@@ -1,15 +1,30 @@
 
+file:
+  upload-dir: ${FILE_PATH}
+
+
+server:
+  port: ${BE_PORT}
+  
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  servlet:
+    multipart:
+      max-file-size: 20MB       # 개별 파일 최대 용량
+      max-request-size: 25MB
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/knufest?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
-    username: root
-    password: 1234
+    url: ${DB_URL}
+    username: ${DB_USER_NAME}
+    password: ${DB_USER_PW}
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${DDL_AUTO}
     properties:
       hibernate:
         format_sql: true
@@ -17,17 +32,17 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 logging:
   level:
     org.hibernate:
       type.descriptor.sql: trace
-      SQL: DEBUG
+      SQL: ${SQL_LOGGING_LEVEL}
 
 jwt:
-  secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
+  secret: "${JWT_SECRET_TOKEN}"
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
@@ -45,6 +60,4 @@ google:
   authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
   token-uri: ${GOOGLE_TOKEN_URI}
   user-info-uri: ${GOOGLE_USER_INFO_URI}
-
-
 

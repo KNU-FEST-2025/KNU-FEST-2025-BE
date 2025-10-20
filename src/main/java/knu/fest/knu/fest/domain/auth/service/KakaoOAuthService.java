@@ -4,6 +4,7 @@ import knu.fest.knu.fest.domain.auth.dto.kakao.KakaoTokenResponse;
 import knu.fest.knu.fest.domain.auth.dto.kakao.KakaoUserInfo;
 import knu.fest.knu.fest.domain.auth.dto.request.KakaoLoginRequest;
 import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginResponse;
+import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.repository.AuthRepository;
 import knu.fest.knu.fest.domain.user.entity.Provider;
 import knu.fest.knu.fest.domain.user.entity.User;
@@ -52,15 +53,19 @@ public class KakaoOAuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthRepository authRepository;
 
-    public String getKakaoAuthorizationUrl() {
+    public KakaoLoginUrlResponse getKakaoAuthorizationUrl() {
         // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-additional-consent
-        return UriComponentsBuilder.fromUriString(kakaoAuthorizationUri)
+        String authorizationUrl =  UriComponentsBuilder.fromUriString(kakaoAuthorizationUri)
             .queryParam("response_type", "code")
             .queryParam("client_id", kakaoClientId)
             .queryParam("redirect_uri", kakaoRedirectUri) // TODO - 배포 시 변경
             // https://developers.kakao.com/docs/latest/ko/kakaologin/utilize#scope-user
             .queryParam("scope", "profile_nickname,profile_image,account_email")
             .toUriString();
+
+        return KakaoLoginUrlResponse.builder()
+                .authorizationUrl(authorizationUrl)
+                .build();
     }
 
     public KakaoLoginResponse processKakaoLogin(KakaoLoginRequest request) {

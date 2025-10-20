@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record UserSignupRequest(
         @NotBlank(message = "이메일은 필수 항목입니다")
         @Pattern(
@@ -26,10 +25,6 @@ public record UserSignupRequest(
 
         @NotBlank(message = "닉네임은 필수 항목입니다.")
         @Schema(description = "사용자의 닉네임")
-        String nickname,
-
-        @NotBlank(message = "닉네임은 필수 항목입니다.")
-        @Schema(description = "사용자의 닉네임")
-        String profileImageLink
+        String nickname
 ) {
 }

@@ -1,5 +1,6 @@
-FROM openjdk:17-jdk
-VOLUME /tmp
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY . .
+RUN ./gradlew clean build -x test
+RUN rm build/libs/*-plain.jar
+ENTRYPOINT ["sh", "-c", "java -jar build/libs/*.jar"]

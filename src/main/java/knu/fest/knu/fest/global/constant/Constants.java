@@ -13,6 +13,7 @@ public class Constants {
             "/api/v1/auth/token/refresh",
             "/api/v1/oauth/**",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/api/v1/lost-item/user/**"
     );
 }
