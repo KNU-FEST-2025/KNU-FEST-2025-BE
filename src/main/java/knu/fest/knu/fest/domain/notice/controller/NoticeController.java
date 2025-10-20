@@ -65,4 +65,33 @@ public class NoticeController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(
+            description = "게시물 삭제",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 삭제 완료"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
+            }
+    )
+    @DeleteMapping("/{id}")
+    public ResponseDto<String> delete(@PathVariable Long id) {
+        String response = noticeService.delete(id);
+
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(
+            description = "게시물 수정",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "게시물 수정 완료"),
+                    @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
+            }
+    )
+    @PutMapping ("/{id}")
+    public ResponseDto<String> update(@PathVariable Long id, @RequestBody CreateNoticeRequestDto requestDto) {
+        String response = noticeService.update(id, requestDto);
+
+        return ResponseDto.ok(response);
+    }
+
+
 }

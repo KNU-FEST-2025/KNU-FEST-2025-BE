@@ -11,4 +11,8 @@ public interface NoticeService {
     ViewNoticeResponseDto viewAll();
 
     NoticeDto getNotice(Long id);
+
+    String delete(Long id);
+
+    String update(Long id, CreateNoticeRequestDto requestDto);
 }

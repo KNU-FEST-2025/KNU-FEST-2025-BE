@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @Entity
 @Getter
@@ -45,6 +47,18 @@ public class Notice extends BaseEntity {
                     String imagePath,
                     NoticeStatus noticeStatus) {
         this.user = user;
+        this.title = title;
+        this.content = content;
+        this.imagePath = imagePath;
+        this.noticeStatus = noticeStatus;
+    }
+
+    public void updateNotice(
+            String title,
+            String content,
+            String imagePath,
+            NoticeStatus noticeStatus
+    ) {
         this.title = title;
         this.content = content;
         this.imagePath = imagePath;

@@ -59,6 +59,36 @@ public class NoticeServiceImpl implements NoticeService{
         return toDto(notice);
     }
 
+    @Override
+    @Transactional
+    public String delete(Long id) {
+        try {
+            if (noticeRepository.existsById(id)) {
+                noticeRepository.deleteById(id);
+                return "삭제 완료";
+            }
+            throw new IllegalArgumentException("해당 게시물이 존재하지 않습니다." + id);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @Override
+    @Transactional
+    public String update(Long id, CreateNoticeRequestDto requestDto) {
+
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. " + id));
+
+        notice.updateNotice(requestDto.getTitle(),
+                requestDto.getContent(),
+                requestDto.getImagePath(),
+                requestDto.getNoticeStatus());
+
+        return "수정 완료";
+
+    }
+
 
 
     private NoticeDto toDto(Notice e) {
