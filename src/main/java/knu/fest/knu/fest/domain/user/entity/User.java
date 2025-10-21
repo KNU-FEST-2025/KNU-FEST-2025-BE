@@ -48,4 +48,8 @@ public class User extends BaseEntity {
         this.profileImageUrl = profileImageUrl;
         this.provider = provider;
     }
+
+    public boolean isAdmin() {
+        return this.role == UserRole.ADMIN;
+    }
 }

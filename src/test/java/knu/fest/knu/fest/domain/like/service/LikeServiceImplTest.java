@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LikeServiceIntegrationTest {
 
     @Autowired
-    private LikeServiceImpl likeService;
+    private LikeService likeService;
 
     @Autowired
     private LikeRepository likeRepository;

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateRequest;
+import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateResponse;
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothDetailResponse;
 import knu.fest.knu.fest.domain.booth.controller.dto.BoothUpdateRequest;
 import knu.fest.knu.fest.domain.booth.service.BoothService;
@@ -30,10 +31,10 @@ public class BoothController {
     )
     @PostMapping
     @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
-    public ResponseDto<BoothDetailResponse> createBooth(
+    public ResponseDto<BoothCreateResponse> createBooth(
             @Valid @RequestBody BoothCreateRequest request
     ) {
-        BoothDetailResponse response = boothService.createBooth(request);
+        BoothCreateResponse response = boothService.createBooth(request);
         return ResponseDto.created(response);
     }
 
