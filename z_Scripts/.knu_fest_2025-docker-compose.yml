@@ -1,0 +1,123 @@
+services:
+  knufest-2025_DB:
+    container_name: knufest-2025_DB
+    image: mysql:8.0
+    restart: unless-stopped
+    expose:
+      - "${DB_PORT}"
+    environment:
+      - Z_MODE=${MODE}
+      - TZ=Asia/Seoul
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PW}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER_NAME}
+      - MYSQL_PASSWORD=${DB_USER_PW}
+    command: [
+      "mysqld",
+      "--server-id=1",
+      "--log-bin=mysql-bin",
+      "--binlog-format=ROW"
+    ]
+    volumes:
+      - "${SERVICE_PATH_ROOT}/mySQL_data:/var/lib/mysql"
+      - "${SERVICE_PATH_ROOT}/mySQL_settings:/etc/mysql"
+      - "${LOG_PATH_ROOT}/mySQL:/var/log/mysql"
+    networks:
+      services:
+        ipv4_address: ${KNUFEST_2025_DB_CONT_IP}
+
+  knufest-2025_Redis:
+    container_name: knufest-2025_Redis
+    image: redis:7.2
+    restart: unless-stopped
+    expose:
+      - "${REDIS_PORT}"
+    environment:
+      - Z_MODE=${MODE}
+      - TZ=Asia/Seoul
+    volumes:
+      - "${SERVICE_PATH_ROOT}/redis_data:/data"
+    networks:
+      services:
+        ipv4_address: ${KNUFEST_2025_REDIS_CONT_IP}
+
+  knufest-2025_DB_Replica:
+    container_name: knufest-2025_DB_Replica
+    image: mysql:8.0
+    restart: unless-stopped
+    expose:
+      - ${REPLICA_PORT}
+    depends_on:
+      - knufest-2025_DB
+    environment:
+      - Z_MODE=${MODE}
+      - TZ=Asia/Seoul
+      - SOURCE_HOST=${DB_IP}
+      - SOURCE_PORT=${DB_PORT}
+      - SOURCE_DB=${DB_NAME}
+      - SOURCE_USER=${DB_USER_NAME}
+      - SOURCE_PASSWORD=${DB_USER_PW}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PW}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER_NAME}
+      - MYSQL_PASSWORD=${DB_USER_PW}
+    command: [
+      "mysqld",
+      "--server-id=2",
+      "--relay-log=relay-log",
+      "--read-only=1"
+    ]
+    volumes:
+      - "${BACKUP_PATH_ROOT}/knufest-2025_DB_Replica/0_mySQL_data:/var/lib/mysql"
+      - "${SERVICE_PATH_ROOT}/replica_mySQL_settings:/etc/mysql"
+      - "${LOG_PATH_ROOT}/replica:/var/log/mysql"
+    networks:
+      services:
+        ipv4_address: ${KNUFEST_2025_DB_REPLICA_CONT_IP}
+
+  knufest-2025_BE:
+    container_name: knufest-2025_BE
+    image: ${KNUFEST_2025_BE_IMG_NAME}
+    restart: unless-stopped
+    expose:
+      - ${BE_PORT}
+    depends_on:
+      - knufest-2025_DB
+      - knufest-2025_Redis
+    environment:
+      - DOMAIN_PATH=${DOMAIN_PATH}
+      - DB_PORT=${DB_PORT}
+      - DB_IP=${DB_IP} 
+      - DB_NAME=${DB_NAME}
+      - DB_USER_NAME=${DB_USER_NAME}
+      - DB_USER_PW=${DB_USER_PW}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - BE_PORT=${BE_PORT}
+      - DB_URL=${DB_URL}
+      - JWT_SECRET_TOKEN=${JWT_SECRET_TOKEN}
+      - KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID}
+      - KAKAO_CALLBACK_URI=${KAKAO_CALLBACK_URI}
+      - KAKAO_AUTH_URI=${KAKAO_AUTH_URI}
+      - KAKAO_TOKEN_URI=${KAKAO_TOKEN_URI}
+      - KAKAO_USER_INFO_URI=${KAKAO_USER_INFO_URI}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CALLBACK_URI=${GOOGLE_CALLBACK_URI}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
+      - GOOGLE_AUTHORIZATION_URI=${GOOGLE_AUTHORIZATION_URI}
+      - GOOGLE_TOKEN_URI=${GOOGLE_TOKEN_URI}
+      - GOOGLE_USER_INFO_URI=${GOOGLE_USER_INFO_URI}
+      - SQL_LOGGING_LEVEL=${SQL_LOGGING_LEVEL}
+      - DDL_AUTO=${DDL_AUTO}
+      - FILE_PATH=${FILE_PATH}
+    volumes:
+      - "${FILE_PATH}:/picture"
+      - "${LOG_PATH_ROOT}/backend:/logs"
+    networks:
+      services:
+        ipv4_address: ${KNUFEST_2025_BE_CONT_IP}
+
+networks:
+  services:
+    external: true
+
