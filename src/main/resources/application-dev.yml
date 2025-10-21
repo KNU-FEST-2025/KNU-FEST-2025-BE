@@ -25,7 +25,7 @@ logging:
       SQL: DEBUG
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET_TOKEN}
 
 
 kakao:
