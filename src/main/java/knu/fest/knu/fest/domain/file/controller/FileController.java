@@ -27,8 +27,8 @@ public class FileController {
         return ResponseDto.ok(new UploadImageDto(url));
     }
 
-    @GetMapping("/lostItem/{id}")
-    public ResponseEntity<Resource> getImage(@PathVariable Long id) throws IOException {
-        return fileService.getImage(id);
+    @GetMapping("/image")
+    public ResponseEntity<Resource> getImage(@RequestParam String path) throws IOException {
+        return fileService.getImage(path);
     }
 }
