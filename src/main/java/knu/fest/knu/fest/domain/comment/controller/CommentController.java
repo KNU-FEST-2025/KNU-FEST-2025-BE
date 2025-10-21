@@ -3,7 +3,6 @@ package knu.fest.knu.fest.domain.comment.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import knu.fest.knu.fest.domain.Like.controller.dto.LikeRequest;
 import knu.fest.knu.fest.domain.comment.controller.dto.CommentCreateRequest;
 import knu.fest.knu.fest.domain.comment.controller.dto.CommentDeleteRequest;
 import knu.fest.knu.fest.domain.comment.controller.dto.CommentResponse;
