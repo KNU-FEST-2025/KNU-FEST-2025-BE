@@ -3,18 +3,17 @@ package knu.fest.knu.fest.domain.auth.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import knu.fest.knu.fest.domain.auth.dto.request.GoogleLoginRequest;
-import knu.fest.knu.fest.domain.auth.dto.request.KakaoLoginRequest;
-import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginResponse;
-import knu.fest.knu.fest.domain.auth.dto.response.GoogleLoginUrlResponse;
-import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginResponse;
-import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginUrlResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.request.GoogleLoginRequest;
+import knu.fest.knu.fest.domain.auth.controller.dto.request.KakaoLoginRequest;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.GoogleLoginResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.GoogleLoginUrlResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.KakaoLoginResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.KakaoLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.service.GoogleOAuthService;
 import knu.fest.knu.fest.domain.auth.service.KakaoOAuthService;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 @RequestMapping("api/v1/oauth")

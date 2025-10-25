@@ -75,8 +75,11 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(authorizeHttpRequests ->
                 authorizeHttpRequests
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                        .requestMatchers(Constants.ADMIN_AUTH_URLS.toArray(String[]::new)).hasAnyRole("ADMIN")
+                        .requestMatchers(Constants.BOOTH_ADMIN_AUTH_URLS.toArray(String[]::new)).hasAnyRole("ADMIN", "BOOTH_MANAGER")
+                        .requestMatchers(Constants.USER_AUTH_URLS.toArray((String[]::new))).hasAnyRole("ADMIN", "BOOTH_MANAGER", "USER")
                         .requestMatchers(Constants.NO_NEED_AUTH_URLS.toArray(String[]::new)).permitAll()
-                        .anyRequest().authenticated() // 나머지 요청은 인증 필요
+                        .anyRequest().authenticated()
         );
 
         httpSecurity

@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/booth/comment")
+@RequestMapping("api/v1/booth")
 @RequiredArgsConstructor
 @Tag(name = "Comment API", description = "댓글 생성/삭제 API")
 public class CommentController {
@@ -27,12 +27,13 @@ public class CommentController {
             - 정상 생성되었다면, 생성정보를 반환합니다. 
             """
     )
-    @PostMapping
+    @PostMapping("/{boothId}/comment")
     public ResponseDto<CommentResponse> createComment(
             @UserId Long userId,
+            @PathVariable("boothId") Long boothId,
             @Valid @RequestBody CommentCreateRequest request
     ) {
-        CommentResponse response = commentService.create(userId, request);
+        CommentResponse response = commentService.create(userId, boothId, request);
         return ResponseDto.created(response);
     }
 
@@ -44,7 +45,7 @@ public class CommentController {
             - 댓글이 성공적으로 삭제된다면, 204 noContent를 반환합니다.
             """
     )
-    @DeleteMapping("/{boothId}")
+    @DeleteMapping("/{boothId}/comment")
     public ResponseDto<Void> deleteComment(
             @UserId Long userId,
             @Valid @RequestBody CommentDeleteRequest request

@@ -21,7 +21,7 @@ public class WaitingSseController {
 
     /** 공개 구독: 해당 부스의 혼잡도(대기 팀 수)를 실시간으로 수신 */
     @GetMapping(value = "/{boothId}/subscribe", produces = "text/event-stream")
-    public SseEmitter subscribe(@PathVariable Long boothId) {
+    public SseEmitter subscribe(@PathVariable("boothId") Long boothId) {
         SseEmitter emitter = notifier.subscribe(boothId);
 
         long count = cache.teamCount(boothId);

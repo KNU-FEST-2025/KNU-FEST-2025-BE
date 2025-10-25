@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.auth.dto.request;
+package knu.fest.knu.fest.domain.auth.controller.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

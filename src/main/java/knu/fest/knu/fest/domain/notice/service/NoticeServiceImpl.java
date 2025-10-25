@@ -8,6 +8,8 @@ import knu.fest.knu.fest.domain.notice.dtos.response.ViewNoticeResponseDto;
 import knu.fest.knu.fest.domain.notice.entity.Notice;
 import knu.fest.knu.fest.domain.notice.entity.NoticeStatus;
 import knu.fest.knu.fest.domain.notice.repository.NoticeRepository;
+import knu.fest.knu.fest.global.exception.CommonException;
+import knu.fest.knu.fest.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     @Transactional
     public NoticeDto getNotice(Long id) {
-        Notice notice = noticeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+        Notice notice = noticeRepository.findById(id).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_NOTICE));
 
         return toDto(notice);
     }
@@ -67,7 +69,7 @@ public class NoticeServiceImpl implements NoticeService{
                 noticeRepository.deleteById(id);
                 return "삭제 완료";
             }
-            throw new IllegalArgumentException("해당 게시물이 존재하지 않습니다." + id);
+            throw new CommonException(ErrorCode.NOT_FOUND_NOTICE);
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -78,7 +80,7 @@ public class NoticeServiceImpl implements NoticeService{
     public String update(Long id, CreateNoticeRequestDto requestDto) {
 
         Notice notice = noticeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. " + id));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTICE));
 
         notice.updateNotice(requestDto.getTitle(),
                 requestDto.getContent(),

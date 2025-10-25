@@ -20,8 +20,8 @@ public class UserController {
                     @ApiResponse(responseCode = "200", description = " UserId 추출 성공 "),
             }
     )
-    @GetMapping("/userId-test")
-    public ResponseDto<String> signup(
+    @GetMapping("/info")
+    public ResponseDto<String> getUserInfo(
             @Parameter(hidden = true) @UserId Long userId
     ) {
         return ResponseDto.ok("USER_ID : " + userId.toString());

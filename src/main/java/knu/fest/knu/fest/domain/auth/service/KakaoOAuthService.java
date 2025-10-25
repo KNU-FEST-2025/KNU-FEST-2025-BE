@@ -1,10 +1,10 @@
 package knu.fest.knu.fest.domain.auth.service;
 
-import knu.fest.knu.fest.domain.auth.dto.kakao.KakaoTokenResponse;
-import knu.fest.knu.fest.domain.auth.dto.kakao.KakaoUserInfo;
-import knu.fest.knu.fest.domain.auth.dto.request.KakaoLoginRequest;
-import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginResponse;
-import knu.fest.knu.fest.domain.auth.dto.response.KakaoLoginUrlResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.kakao.KakaoTokenResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.kakao.KakaoUserInfo;
+import knu.fest.knu.fest.domain.auth.controller.dto.request.KakaoLoginRequest;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.KakaoLoginResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.KakaoLoginUrlResponse;
 import knu.fest.knu.fest.domain.auth.repository.AuthRepository;
 import knu.fest.knu.fest.domain.user.entity.Provider;
 import knu.fest.knu.fest.domain.user.entity.User;

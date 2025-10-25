@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.auth.dto.kakao;
+package knu.fest.knu.fest.domain.auth.controller.dto.kakao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
