@@ -14,9 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/notice")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
-public class NoticeController {
+public class  NoticeController {
 
     private final NoticeService noticeService;
 
@@ -27,7 +27,7 @@ public class NoticeController {
                     @ApiResponse(responseCode = "200", description = "게시물 생성 완료: {NoticeId}"),
             }
     )
-    @PostMapping
+    @PostMapping("/admin/notice")
     public ResponseDto<String> create(
             //@Parameter(hidden = true) @UserId Long userId,
             @RequestParam Long userId,
@@ -44,7 +44,7 @@ public class NoticeController {
                     @ApiResponse(responseCode = "200", description = "게시물 리스트"),
             }
     )
-    @GetMapping("/user")
+    @GetMapping("/notice/user")
     public ResponseDto<ViewNoticeResponseDto> viewAll() {
         ViewNoticeResponseDto response = noticeService.viewAll();
 
@@ -58,8 +58,8 @@ public class NoticeController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
             }
     )
-    @GetMapping("/user/{id}")
-    public ResponseDto<NoticeDto> getNotice (@PathVariable Long id) {
+    @GetMapping("/notice/user/{noticeId}")
+    public ResponseDto<NoticeDto> getNotice (@PathVariable("noticeId") Long id) {
         NoticeDto response = noticeService.getNotice(id);
 
         return ResponseDto.ok(response);
@@ -72,7 +72,7 @@ public class NoticeController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
             }
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/notice/{id}")
     public ResponseDto<String> delete(@PathVariable Long id) {
         String response = noticeService.delete(id);
 
@@ -86,7 +86,7 @@ public class NoticeController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지 않음")
             }
     )
-    @PutMapping ("/{id}")
+    @PutMapping ("/admin/notice/{id}")
     public ResponseDto<String> update(@PathVariable Long id, @RequestBody CreateNoticeRequestDto requestDto) {
         String response = noticeService.update(id, requestDto);
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("api/v1/lost-item")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class LostItemController {
 
@@ -28,11 +28,11 @@ public class LostItemController {
                     @ApiResponse(responseCode = "200", description = "게시물 생성 완료: {lostItemId}"),
             }
     )
-    @PostMapping
+    @PostMapping("/admin/lost-item")
     public ResponseDto<String> create(
             @Parameter(hidden = true) @UserId Long userId,
             @RequestBody CreateLostItmeRequestDto request
-            ) {
+    ) {
         String createdId = lostItemService.create(userId, request);
 
         return ResponseDto.ok("게시물 생성 완료: " + createdId);
@@ -45,7 +45,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "200", description = "게시물 리스트"),
             }
     )
-    @GetMapping("/user")
+    @GetMapping("/lost-item/user")
     public ResponseDto<ViewLostItemResponseDto> viewAll () {
         ViewLostItemResponseDto response = lostItemService.viewAll();
 
@@ -60,7 +60,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
-    @GetMapping("/user/{id}")
+    @GetMapping("/lost-item/user/{id}")
     public ResponseDto<LostItemDto> getItem (@PathVariable Long id) {
         LostItemDto response = lostItemService.getItem(id);
 
@@ -75,7 +75,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/lost-item/{id}")
     public ResponseDto<String> delete (@PathVariable Long id) {
         String response = lostItemService.delete(id);
 
@@ -90,7 +90,7 @@ public class LostItemController {
                     @ApiResponse(responseCode = "404", description = "게시물 존재하지않음")
             }
     )
-    @PutMapping("/{id}")
+    @PutMapping("/admin/lost-item/{id}")
     public ResponseDto<String> update (
             @PathVariable Long id,
             @RequestBody CreateLostItmeRequestDto request) {

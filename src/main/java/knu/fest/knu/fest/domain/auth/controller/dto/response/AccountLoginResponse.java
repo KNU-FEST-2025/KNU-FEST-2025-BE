@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.auth.dto.response;
+package knu.fest.knu.fest.domain.auth.controller.dto.response;
 
 import lombok.Builder;
 import lombok.NonNull;

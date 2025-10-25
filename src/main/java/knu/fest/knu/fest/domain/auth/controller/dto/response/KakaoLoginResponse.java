@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.auth.dto.response;
+package knu.fest.knu.fest.domain.auth.controller.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

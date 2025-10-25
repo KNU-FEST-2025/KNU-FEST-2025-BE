@@ -25,10 +25,10 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public CommentResponse create(Long userId, CommentCreateRequest request) {
+    public CommentResponse create(Long userId, Long boothId, CommentCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Booth booth = boothRepository.findById(request.boothId())
+        Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         Comment comment = Comment.builder()
