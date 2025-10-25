@@ -29,8 +29,7 @@ public class NoticeController {
     )
     @PostMapping
     public ResponseDto<String> create(
-            //@Parameter(hidden = true) @UserId Long userId,
-            @RequestParam Long userId,
+            @Parameter(hidden = true) @UserId Long userId,
             @RequestBody CreateNoticeRequestDto request) {
 
         String createdId = noticeService.create(userId, request);
