@@ -13,6 +13,7 @@ public record BoothDetailResponse(
         Long waitingCount,
         Long likeCount,
         List<CommentResponse> comments,
+        List<String> imagePath,
         boolean likedByMe
         // TODO: images, .. 등 추가 예정
 ) {
@@ -25,6 +26,7 @@ public record BoothDetailResponse(
                 booth.getWaitingCount(),
                 booth.getLikeCount(),
                 comments,
+                booth.getImagePath(),
                 likedByMe
         );
     }

@@ -9,14 +9,16 @@ public record BoothCreateResponse(
         Long id,
         String name,
         String description,
-        Integer boothNumber
+        Integer boothNumber,
+        List<String> imagePath
 ) {
     public static BoothCreateResponse from(Booth booth) {
         return new BoothCreateResponse(
                 booth.getId(),
                 booth.getName(),
                 booth.getDescription(),
-                booth.getBoothNumber()
+                booth.getBoothNumber(),
+                booth.getImagePath()
         );
     }
 }
