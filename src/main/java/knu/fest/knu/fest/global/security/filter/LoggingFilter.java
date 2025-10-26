@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class LoggingFilter extends OncePerRequestFilter {
 
-    // ✅ 커스텀 로거 이름 지정
     private static final Logger logger = LoggerFactory.getLogger("knu.fest.user.logger");
 
     @Override
@@ -30,7 +29,7 @@ public class LoggingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             long duration = System.currentTimeMillis() - startTime;
-            // ✅ logger로 교체
+
             logger.error("(IP={}) : [{}] {} -> Exception:{} | {}ms",
                     clientIp, method, uri, e.getClass().getSimpleName(), duration, e);
             throw e;
