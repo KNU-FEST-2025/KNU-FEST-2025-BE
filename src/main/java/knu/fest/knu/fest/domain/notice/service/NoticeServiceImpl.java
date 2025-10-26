@@ -1,6 +1,7 @@
 package knu.fest.knu.fest.domain.notice.service;
 
 
+
 import knu.fest.knu.fest.domain.notice.dtos.request.CreateNoticeRequestDto;
 import knu.fest.knu.fest.domain.notice.dtos.response.NoticeDto;
 import knu.fest.knu.fest.domain.notice.dtos.response.ViewNoticeResponseDto;
@@ -33,9 +34,14 @@ public class NoticeServiceImpl implements NoticeService{
                 .user(userId)
                 .title(request.getTitle())
                 .content(request.getContent())
-                .imagePath(request.getImagePath())
                 .noticeStatus(status)
+                .imagePath(request.getImagePath())
                 .build();
+
+//        request.getImagePath().stream()
+//                .map(p -> imageRepository.findByImage(p)
+//                        .orElseThrow(() -> new IllegalArgumentException("이미지 경로를 찾을 수 없습니다: " + p))
+//                        .getId())
 
         Notice saved = noticeRepository.save(notice);
         return String.valueOf(saved.getId());
@@ -96,7 +102,7 @@ public class NoticeServiceImpl implements NoticeService{
                 .id(e.getId())
                 .title(e.getTitle())
                 .content(e.getContent())
-                .imagePath(e.getImagePath())
+                .imagePath(e.getImagePath().toString())
                 .noticeStatus(e.getNoticeStatus())
                 .createdAt(e.getCreatedAt())
                 .updatedAt(e.getModifiedAt())

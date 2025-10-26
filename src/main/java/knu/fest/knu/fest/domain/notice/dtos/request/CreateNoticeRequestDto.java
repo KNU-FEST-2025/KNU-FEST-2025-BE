@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +17,5 @@ public class CreateNoticeRequestDto {
     private String title;
     private String content;
     private NoticeStatus noticeStatus;
-    private String imagePath;
+    private List<String> imagePath;
 }

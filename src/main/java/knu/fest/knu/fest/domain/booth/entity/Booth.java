@@ -38,6 +38,11 @@ public class Booth extends BaseEntity {
 
     @Column(name = "like_count", nullable = false)
     private Long likeCount = 0L;
+
+    // 사진 파일 경로 (또는 URL)
+    @ElementCollection
+    private List<String> imagePath = new ArrayList<>();
+
 /**
     @OneToMany(mappedBy = "booth", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Waiting> waitings = new ArrayList<>();
@@ -66,12 +71,13 @@ public class Booth extends BaseEntity {
     }
 
     @Builder
-    public Booth(String name, String description, Integer boothNumber, Long likeCount, Long waitingCount) {
+    public Booth(String name, String description, Integer boothNumber, Long likeCount, Long waitingCount, List<String> imagePath) {
         this.name = name;
         this.description = description;
         this.boothNumber = boothNumber;
         this.likeCount = likeCount;
         this.waitingCount = waitingCount;
+        this.imagePath = imagePath;
     }
 
     public void update(@NotBlank @Size(max = 120) String name, String description) {

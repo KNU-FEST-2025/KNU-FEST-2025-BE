@@ -6,6 +6,8 @@ import knu.fest.knu.fest.global.common.BaseEntity;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -33,7 +35,8 @@ public class Notice extends BaseEntity {
     private String content;
 
     // 사진 파일 경로 (또는 URL)
-    private String imagePath;
+    @ElementCollection
+    private List<String> imagePath = new ArrayList<>();
 
     // 분실물 상태
     @Enumerated(EnumType.STRING)
@@ -44,7 +47,7 @@ public class Notice extends BaseEntity {
     public Notice(Long user,
                     String title,
                     String content,
-                    String imagePath,
+                    List<String> imagePath,
                     NoticeStatus noticeStatus) {
         this.user = user;
         this.title = title;
@@ -56,7 +59,7 @@ public class Notice extends BaseEntity {
     public void updateNotice(
             String title,
             String content,
-            String imagePath,
+            List<String> imagePath,
             NoticeStatus noticeStatus
     ) {
         this.title = title;

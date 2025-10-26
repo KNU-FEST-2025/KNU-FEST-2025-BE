@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/files")
@@ -21,9 +22,9 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping(value = "/image", consumes = "multipart/form-data")
-    public ResponseDto<UploadImageDto> uploadImage(@RequestPart("image") MultipartFile image,
+    public ResponseDto<UploadImageDto> uploadImage(@RequestPart("image") List<MultipartFile> image,
                                                    @RequestParam("type") ImageType type) {
-        String url = fileService.store(image, type);
+        List<String> url = fileService.store(image, type);
         return ResponseDto.ok(new UploadImageDto(url));
     }
 

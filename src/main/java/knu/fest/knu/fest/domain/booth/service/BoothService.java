@@ -35,6 +35,7 @@ public class BoothService {
                 .boothNumber(request.boothNumber())
                 .likeCount(0L)
                 .waitingCount(0L)
+                .imagePath(request.imagePath())
                 .build();
         Booth saved = boothRepository.save(booth);
 

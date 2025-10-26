@@ -37,7 +37,6 @@ out/
 /nbdist/
 /.nb-gradle/
 
-.env
 
 ### VS Code ###
 .vscode/
@@ -45,3 +44,5 @@ out/
 ### My ignore list ###
 *.yml
 .env
+*.log
+logs/
