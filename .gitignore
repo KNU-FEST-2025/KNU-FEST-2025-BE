@@ -45,3 +45,4 @@ out/
 ### My ignore list ###
 *.yml
 .env
+*.log
