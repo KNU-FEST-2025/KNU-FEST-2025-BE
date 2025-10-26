@@ -1,4 +1,4 @@
-package knu.fest.knu.fest.domain.auth.dto.request;
+package knu.fest.knu.fest.domain.auth.controller.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

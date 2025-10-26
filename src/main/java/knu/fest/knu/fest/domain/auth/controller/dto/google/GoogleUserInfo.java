@@ -1,7 +1,6 @@
-package knu.fest.knu.fest.domain.auth.dto.google;
+package knu.fest.knu.fest.domain.auth.controller.dto.google;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import knu.fest.knu.fest.domain.auth.dto.kakao.KakaoUserInfo;
 
 public record GoogleUserInfo(
         @JsonProperty("id") String id,

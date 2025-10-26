@@ -2,7 +2,9 @@ package knu.fest.knu.fest.domain.user.entity;
 
 public enum UserRole {
     USER("USER"),
-    ADMIN("ADMIN");
+    BOOTH_MANAGER("BOOTH_MANAGER"),
+    ADMIN("ADMIN")
+    ;
 
     private final String authority;
 
@@ -11,6 +13,6 @@ public enum UserRole {
     }
 
     public String getAuthority() {
-        return authority;
+        return "ROLE_" + authority;
     }
 }

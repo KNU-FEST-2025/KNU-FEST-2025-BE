@@ -17,6 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_BOOTH(40404, HttpStatus.NOT_FOUND, "존재하지 않는 부스입니다."),
     NOT_FOUND_COMMENT(40405, HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다."),
     NOT_FOUND_WAITING(40405, HttpStatus.NOT_FOUND, "존재하지 않는 웨이팅입니다."),
+    NOT_FOUND_NOTICE(40406, HttpStatus.NOT_FOUND, "존재하지 않는 공지글입니다."),
 
 
     // Invalid Argument Error

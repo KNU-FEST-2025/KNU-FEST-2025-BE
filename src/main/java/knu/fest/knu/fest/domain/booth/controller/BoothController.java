@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/booth")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
 @Tag(name = "Booth API", description = "축제 부스 생성/조회/수정 API")
 public class BoothController {
@@ -29,11 +29,12 @@ public class BoothController {
             - 부스 번호(`boothNumber`)는 중복될 수 없습니다.  
             """
     )
-    @PostMapping
-    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+    @PostMapping("/admin/booth")
     public ResponseDto<BoothCreateResponse> createBooth(
             @Valid @RequestBody BoothCreateRequest request
     ) {
+        System.out.println("asdfasdfasdf");
+
         BoothCreateResponse response = boothService.createBooth(request);
         return ResponseDto.created(response);
     }
@@ -47,8 +48,7 @@ public class BoothController {
             - 일부 필드만 수정할 수도 있습니다. (null 로 보내면 해당 필드는 수정하지 않음)  
             """
     )
-    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
-    @PutMapping("/{id}")
+    @PutMapping("/admin/booth/{id}")
     public ResponseDto<BoothDetailResponse> updateBooth(
             @PathVariable Long id,
             @Valid @RequestBody BoothUpdateRequest request
@@ -65,9 +65,9 @@ public class BoothController {
             - 모든 사용자(비로그인 포함)가 호출 가능합니다.  
             """
     )
-    @GetMapping("/{id}")
+    @GetMapping("/booth/{id}")
     public ResponseDto<BoothDetailResponse> getBooth(
-            @PathVariable Long id
+            @PathVariable("id") Long id
     ) {
         BoothDetailResponse response = boothService.getBooth(id);
 
