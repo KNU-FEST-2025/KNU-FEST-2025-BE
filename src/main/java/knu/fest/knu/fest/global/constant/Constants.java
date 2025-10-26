@@ -25,6 +25,10 @@ public class Constants {
             "/api/v1/user/info"
     );
 
+    public static List<String> NO_NEED_OR_USER_AUTH_URLS = List.of(
+            "/api/v1/booth"
+    );
+
 
     public static List<String> NO_NEED_AUTH_URLS = List.of(
             "/api/v1/auth/signup",
@@ -42,7 +46,6 @@ public class Constants {
             "/api/v1/subscribe/all",
             "/api/v1/like/subscribe/**",
             "/api/v1/waiting/subscribe/**",
-            "/api/v1/booth/subscribe/**",
-            "/api/v1/booth"
+            "/api/v1/booth/subscribe/**"
     );
 }

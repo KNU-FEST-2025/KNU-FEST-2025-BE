@@ -31,7 +31,6 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
                 Constants.USER_ID_ATTRIBUTE_NAME,
                 WebRequest.SCOPE_REQUEST
         );
-
         if (userIdObj == null) {
             return null;
         }

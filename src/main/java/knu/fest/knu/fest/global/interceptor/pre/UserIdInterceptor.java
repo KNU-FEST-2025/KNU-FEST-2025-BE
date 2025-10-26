@@ -18,10 +18,23 @@ public class UserIdInterceptor implements HandlerInterceptor {
             Object handler
     ) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        request.setAttribute(Constants.USER_ID_ATTRIBUTE_NAME, userDetails.getUsername());
+        if (authentication == null || authentication.getPrincipal() == null) {
+            return true; // 로그인 안한 사용자
+        }
 
-        System.out.println(userDetails.getUsername());
+        Object principal = authentication.getPrincipal();
+        String userId = null;
+
+        if (principal instanceof CustomUserDetails customUserDetails) {
+            userId = customUserDetails.getUsername();
+        } else if (principal instanceof String strPrincipal) {
+            userId = null;
+        }
+
+        if (userId != null) {
+            request.setAttribute(Constants.USER_ID_ATTRIBUTE_NAME, userId);
+            System.out.println("User ID set from interceptor: " + userId);
+        }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }
