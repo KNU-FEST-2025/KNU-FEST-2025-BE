@@ -28,11 +28,9 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    //private final long ACCESS_TOKEN_VALIDITY = 1*30*60*1000L; // 30분
-    private final long ACCESS_TOKEN_VALIDITY = 30L * 24 * 60 * 60 * 1000; // 30일 (한 달)
-
-    public static final long REFRESH_TOKEN_VALIDITY = 24*60*60*1000L; // 24시간
-
+    private final long ACCESS_TOKEN_VALIDITY = 24*60*60*1000L; // 24시간
+    public static final long REFRESH_TOKEN_VALIDITY = 30L * 24 * 60 * 60 * 1000; // 30일 (한 달)
+    
     public static final String AUTHORIZATION_KEY = "auth";
     public static final String USER_ID_KEY = "userId";
 
