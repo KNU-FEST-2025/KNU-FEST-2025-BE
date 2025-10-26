@@ -66,11 +66,12 @@ public class Booth extends BaseEntity {
     }
 
     @Builder
-    public Booth(String name, String description, Integer boothNumber, Long likeCount) {
+    public Booth(String name, String description, Integer boothNumber, Long likeCount, Long waitingCount) {
         this.name = name;
         this.description = description;
         this.boothNumber = boothNumber;
         this.likeCount = likeCount;
+        this.waitingCount = waitingCount;
     }
 
     public void update(@NotBlank @Size(max = 120) String name, String description) {
