@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.sql.Time;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private final UserIdArgumentResolver userIdArgumentResolver;
     private final UserIdInterceptor userIdInterceptor;
 
-    @Value("{file.upload-dir}")
+    @Value("${file.upload-dir}")
     private String uploadDir;
 
     @Override
