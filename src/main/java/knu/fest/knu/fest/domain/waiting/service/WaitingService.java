@@ -40,6 +40,10 @@ public class WaitingService {
 
         Waiting w = request.toEntity(booth);
         waitingRepository.save(w);
+
+        // WaitingCount + 1
+        booth.addWaiting();
+        boothRepository.save(booth);
         Long waitingId = w.getId();
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
@@ -64,6 +68,10 @@ public class WaitingService {
 
         waiting.cancel();
 
+        // WaitingCount -1
+        booth.removeWaiting();
+        boothRepository.save(booth);
+
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
@@ -85,6 +93,10 @@ public class WaitingService {
         Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         waiting.complete();
+
+        // WaitingCount -1
+        booth.removeWaiting();
+        boothRepository.save(booth);
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override

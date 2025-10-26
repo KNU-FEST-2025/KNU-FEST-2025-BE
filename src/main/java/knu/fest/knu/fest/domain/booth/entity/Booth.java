@@ -60,6 +60,17 @@ public class Booth extends BaseEntity {
     }
 */
 
+
+    public void addWaiting() {
+    this.waitingCount += 1;
+}
+
+    public void removeWaiting() {
+        if (this.waitingCount > 0) {
+            this.waitingCount -= 1;
+        }
+    }
+
     public void addLike() {
         this.likeCount += 1;
     }
