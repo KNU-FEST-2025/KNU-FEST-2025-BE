@@ -1,7 +1,6 @@
 package knu.fest.knu.fest.domain.notice.service;
 
 
-import jakarta.transaction.Transactional;
 import knu.fest.knu.fest.domain.notice.dtos.request.CreateNoticeRequestDto;
 import knu.fest.knu.fest.domain.notice.dtos.response.NoticeDto;
 import knu.fest.knu.fest.domain.notice.dtos.response.ViewNoticeResponseDto;
@@ -13,17 +12,18 @@ import knu.fest.knu.fest.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class NoticeServiceImpl implements NoticeService{
 
     private final NoticeRepository noticeRepository;
 
     @Override
-    @Transactional
     public String create(Long userId, CreateNoticeRequestDto request) {
 
         // 기본값 NORMAL
@@ -42,7 +42,7 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ViewNoticeResponseDto viewAll() {
         List<Notice> items = noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
@@ -54,7 +54,7 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public NoticeDto getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_NOTICE));
 
@@ -62,7 +62,6 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    @Transactional
     public String delete(Long id) {
         try {
             if (noticeRepository.existsById(id)) {
@@ -76,7 +75,6 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    @Transactional
     public String update(Long id, CreateNoticeRequestDto requestDto) {
 
         Notice notice = noticeRepository.findById(id)

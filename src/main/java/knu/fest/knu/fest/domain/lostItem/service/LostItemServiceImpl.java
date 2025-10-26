@@ -1,6 +1,6 @@
 package knu.fest.knu.fest.domain.lostItem.service;
 
-import jakarta.transaction.Transactional;
+
 import knu.fest.knu.fest.domain.lostItem.dtos.request.CreateLostItmeRequestDto;
 import knu.fest.knu.fest.domain.lostItem.dtos.response.LostItemDto;
 import knu.fest.knu.fest.domain.lostItem.dtos.response.ViewLostItemResponseDto;
@@ -10,18 +10,18 @@ import knu.fest.knu.fest.domain.lostItem.repository.LostItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LostItemServiceImpl implements LostItemService{
 
     private final LostItemRepository lostItemRepository;
 
     @Override
-    @Transactional
     public String create(Long userId, CreateLostItmeRequestDto request){
 
         // 상태 기본값 필요 시 LOST로 디폴트
@@ -42,7 +42,7 @@ public class LostItemServiceImpl implements LostItemService{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ViewLostItemResponseDto viewAll() {
         List<LostItem> items = lostItemRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
@@ -54,7 +54,7 @@ public class LostItemServiceImpl implements LostItemService{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public LostItemDto getItem(Long id) {
         LostItem item = lostItemRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다.: " + id));
 
@@ -62,7 +62,6 @@ public class LostItemServiceImpl implements LostItemService{
     }
 
     @Override
-    @Transactional
     public String delete(Long id) {
         try{
             if (lostItemRepository.existsById(id)) {
@@ -76,7 +75,6 @@ public class LostItemServiceImpl implements LostItemService{
     }
 
     @Override
-    @Transactional
     public String update(Long id, CreateLostItmeRequestDto request) {
 
         LostItem item = lostItemRepository.findById(id)
