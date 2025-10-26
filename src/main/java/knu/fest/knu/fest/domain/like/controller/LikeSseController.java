@@ -21,14 +21,14 @@ public class LikeSseController {
     private final LikeSseNotifier notifier;
     private final LikeCacheService cache;
 
-    @GetMapping(value = "/{boothId}/subscribe", produces = "text/event-stream")
+    @GetMapping(value = "/subscribe/{boothId}", produces = "text/event-stream")
     public SseEmitter likeSubscribe(@PathVariable Long boothId) {
         SseEmitter emitter = notifier.likeSubscribe(boothId);
 
         long count = cache.count(boothId);
         try {
             emitter.send(SseEmitter.event()
-                    .name("waiting-count")
+                    .name("like-count")
                     .data(Map.of("boothId", boothId, "Count", count)));
         } catch (IOException ignore) {
 
