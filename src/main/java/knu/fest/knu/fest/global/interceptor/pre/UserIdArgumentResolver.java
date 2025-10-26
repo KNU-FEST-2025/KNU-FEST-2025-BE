@@ -32,6 +32,16 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
                 WebRequest.SCOPE_REQUEST
         );
 
-        return Long.parseLong(userIdObj);
+        if (userIdObj == null) {
+            return null;
+        }
+
+        try {
+            return Long.parseLong(userIdObj);
+        } catch (NumberFormatException e) {
+            // 혹시 잘못된 값이 들어온 경우도 안전하게 처리
+            throw new CommonException(ErrorCode.INVALID_TOKEN);
+        }
     }
+
 }

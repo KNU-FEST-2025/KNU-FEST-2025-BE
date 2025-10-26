@@ -12,7 +12,6 @@ public class Constants {
     );
 
     public static List<String> BOOTH_ADMIN_AUTH_URLS = List.of(
-            "/api/v1/admin/booth/**",
             "/api/v1/admin/lost-item",
             "/api/v1/admin/lost-item/**",
             "/api/v1/admin/waiting",
@@ -40,9 +39,10 @@ public class Constants {
             "/api/v1/notice/**",
             "/api/v1/files/**",
             "/api/v1/waiting/{boothId}/public",
-            "/api/v1/waiting/{boothId}/subscribe",
             "/api/v1/subscribe/all",
             "/api/v1/like/subscribe/**",
-            "/api/v1/waiting/subscribe/**"
+            "/api/v1/waiting/subscribe/**",
+            "/api/v1/booth/subscribe/**",
+            "/api/v1/booth"
     );
 }

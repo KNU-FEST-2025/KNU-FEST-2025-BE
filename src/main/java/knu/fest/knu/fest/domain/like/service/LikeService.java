@@ -10,6 +10,8 @@ import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
 import knu.fest.knu.fest.domain.like.sse.LikeSseNotifier;
 import knu.fest.knu.fest.domain.user.entity.User;
 import knu.fest.knu.fest.domain.user.repository.UserRepository;
+import knu.fest.knu.fest.global.exception.CommonException;
+import knu.fest.knu.fest.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,15 +40,15 @@ public class LikeService {
 
         boolean exists = likeRepository.existsByUserIdAndBoothId(userId, request.boothId());
         if (exists) {
-            throw new IllegalStateException("이미 좋아요를 누른 부스입니다.");
+            throw new CommonException(ErrorCode.ALREADY_HAVE_LIKE);
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         // row-level lock 조회
         Booth booth = boothRepository.findByIdForUpdate(request.boothId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         Like like = Like.builder()
                 .user(user)
@@ -72,11 +74,11 @@ public class LikeService {
 
     public void delete(Long userId, LikeRequest request) {
         Like like = likeRepository.findByUserIdAndBoothId(userId, request.boothId())
-                .orElseThrow(() -> new IllegalStateException("좋아요가 존재하지 않습니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_LIKE));
 
         // row-level lock 조회.
         Booth booth = boothRepository.findByIdForUpdate(like.getBooth().getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
         likeRepository.delete(like);
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {

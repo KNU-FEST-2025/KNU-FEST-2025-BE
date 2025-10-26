@@ -34,10 +34,10 @@ public enum ErrorCode {
     INVALID_JWT_TOKEN_FORMAT(40302, HttpStatus.FORBIDDEN, "토큰 형식이 맞지 않습니다. 올바른 토큰 형식 'Authorization' : 'Bearer {token}')"),
     POST_EDIT_FORBIDDEN(40303, HttpStatus.FORBIDDEN, "게시물을 수정할 권한이 없습니다."),
     COMMENT_EDIT_FORBIDDEN(40304, HttpStatus.FORBIDDEN, "댓글을 수정할 권한이 없습니다."),
+    INVALID_TOKEN(40305, HttpStatus.FORBIDDEN, "잘못된 토큰 값입니다." ),
 
     // Internal Server Error
-    INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다.")
-    ;
+    INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다.");
 
     private final Integer code;
     private final HttpStatus httpStatus;

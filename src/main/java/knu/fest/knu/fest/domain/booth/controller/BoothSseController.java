@@ -14,7 +14,7 @@ public class BoothSseController {
     private final BoothSseService boothSseService;
 
     // 전체 부스 구독
-    @GetMapping(value = "/subscribe/all", produces = "text/event-stream")
+    @GetMapping(value = "booth/subscribe/all", produces = "text/event-stream")
     public SseEmitter subscribeAll() {
         return boothSseService.subscribeAllBooth();
     }
