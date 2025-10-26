@@ -140,7 +140,8 @@ public class GoogleOAuthService {
 
         // Jwt 및 로그인 정보 전달
         return GoogleLoginResponse.builder()
-                .accountId(user.getId())
+                .userId(user.getId())
+                .nickname(user.getNickname())
                 .userRole(user.getRole().getAuthority())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

@@ -33,8 +33,6 @@ public class BoothController {
     public ResponseDto<BoothCreateResponse> createBooth(
             @Valid @RequestBody BoothCreateRequest request
     ) {
-        System.out.println("asdfasdfasdf");
-
         BoothCreateResponse response = boothService.createBooth(request);
         return ResponseDto.created(response);
     }

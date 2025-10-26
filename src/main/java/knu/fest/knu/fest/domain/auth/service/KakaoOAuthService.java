@@ -153,26 +153,27 @@ public class KakaoOAuthService {
             .build();
     }
 
-    private KakaoLoginResponse handleLogin(User account, boolean isNewUser) {
+    private KakaoLoginResponse handleLogin(User user, boolean isNewUser) {
         // 토큰 생성
-        String accessToken = jwtTokenProvider.createAccessTokenWithAccountEntity(account);
-        String refreshToken = jwtTokenProvider.createRefreshTokenWithAccountEntity(account);
+        String accessToken = jwtTokenProvider.createAccessTokenWithAccountEntity(user);
+        String refreshToken = jwtTokenProvider.createRefreshTokenWithAccountEntity(user);
 
         // refresh 토큰 저장
         authRepository.saveRefreshToken(
-            account.getId(),
+            user.getId(),
             refreshToken,
             JwtTokenProvider.REFRESH_TOKEN_VALIDITY
         );
 
         // Jwt 및 로그인 정보 전달
         return KakaoLoginResponse.builder()
-            .accountId(account.getId())
-            .userRole(account.getRole().getAuthority())
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
-            .isNewUser(isNewUser)
-            .build();
+            .userId(user.getId())
+                .nickname(user.getNickname())
+                .userRole(user.getRole().getAuthority())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .isNewUser(isNewUser)
+                .build();
     }
     private <T> Mono<T> applyKakaoApiErrorHandling(Mono<T> mono, String operationName) {
         return mono.onErrorResume(error -> {

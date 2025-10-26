@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import knu.fest.knu.fest.domain.auth.controller.dto.request.TokenRefreshRequest;
 import knu.fest.knu.fest.domain.auth.controller.dto.request.UserLoginRequest;
 import knu.fest.knu.fest.domain.auth.controller.dto.request.UserSignupRequest;
-import knu.fest.knu.fest.domain.auth.controller.dto.response.AccountLoginResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.UserLoginResponse;
 import knu.fest.knu.fest.domain.auth.controller.dto.response.TokenRefreshResponse;
 import knu.fest.knu.fest.domain.auth.service.AuthService;
 import knu.fest.knu.fest.global.common.ResponseDto;
@@ -49,7 +49,7 @@ public class AuthController {
         }
     )
     @PostMapping("/login")
-    public ResponseDto<AccountLoginResponse> login(
+    public ResponseDto<UserLoginResponse> login(
         @Valid @RequestBody UserLoginRequest loginRequestDto
     ) {
         return ResponseDto.ok(
