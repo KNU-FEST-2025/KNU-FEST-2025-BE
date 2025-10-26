@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -101,6 +102,7 @@ public class LostItemServiceImpl implements LostItemService{
                 .content(e.getContent())
                 .foundTime(e.getFoundTime())       // LocalDateTime 가정
                 .lostStatus(e.getLostStatus())     // enum
+                .imagePath(e.getImagePath())
                 .createdAt(e.getCreatedAt())       // @CreationTimestamp 가정
                 .updatedAt(e.getModifiedAt())       // @UpdateTimestamp 가정
                 .build();

@@ -19,6 +19,8 @@ public class LostItemDto {
     private String title;
     private String content;
     private LocalDate foundTime;
+    private String Location;
+    private String imagePath;
     private LostStatus lostStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
