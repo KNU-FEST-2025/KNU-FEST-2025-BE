@@ -29,12 +29,12 @@ public class LikeSseNotifier {
         return emitter;
     }
 
-    public void notifyCount(Long boothId, long teamCount) {
+    public void notifyCount(Long boothId, long count) {
         List<SseEmitter> list = emitters.get(boothId);
         if (list == null || list.isEmpty()) return;
 
         for (SseEmitter emitter : list) {
-            if (!sendTo(emitter, "waiting-count", Map.of("boothId", boothId, "teamCount", teamCount))) {
+            if (!sendTo(emitter, "like-count", Map.of("boothId", boothId, "Count", count))) {
                 remove(boothId, emitter);
             }
         }
@@ -49,8 +49,6 @@ public class LikeSseNotifier {
             return false;
         }
     }
-
-
 
 
     private void remove(Long boothId, SseEmitter emitter) {
