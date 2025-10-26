@@ -4,6 +4,7 @@ package knu.fest.knu.fest.global.security.config;
 import knu.fest.knu.fest.global.constant.Constants;
 import knu.fest.knu.fest.global.security.filter.JwtAuthenticationFilter;
 import knu.fest.knu.fest.global.security.filter.JwtExceptionFilter;
+import knu.fest.knu.fest.global.security.filter.LoggingFilter;
 import knu.fest.knu.fest.global.security.handler.JwtAccessDeniedHandler;
 import knu.fest.knu.fest.global.security.handler.JwtAuthEntryPoint;
 import knu.fest.knu.fest.global.security.jwt.JwtTokenProvider;
@@ -96,6 +97,14 @@ public class SecurityConfig {
                         jwtExceptionFilter(),
                         JwtAuthenticationFilter.class
                 )
+
+                .addFilterBefore(
+                        new JwtExceptionFilter(),
+                        JwtAuthenticationFilter.class)
+                .addFilterBefore(
+                        new LoggingFilter(),
+                        JwtExceptionFilter.class)
+
         ;
 
         return httpSecurity.build();
