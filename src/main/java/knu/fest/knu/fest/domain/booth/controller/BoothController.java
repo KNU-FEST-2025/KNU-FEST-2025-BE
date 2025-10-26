@@ -3,15 +3,15 @@ package knu.fest.knu.fest.domain.booth.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateRequest;
-import knu.fest.knu.fest.domain.booth.controller.dto.BoothCreateResponse;
-import knu.fest.knu.fest.domain.booth.controller.dto.BoothDetailResponse;
-import knu.fest.knu.fest.domain.booth.controller.dto.BoothUpdateRequest;
+import knu.fest.knu.fest.domain.booth.controller.dto.*;
 import knu.fest.knu.fest.domain.booth.service.BoothService;
+import knu.fest.knu.fest.global.annotation.UserId;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
@@ -72,5 +72,12 @@ public class BoothController {
         BoothDetailResponse response = boothService.getBooth(id);
 
         return ResponseDto.ok(response);
+    }
+
+    @GetMapping("")
+    public ResponseDto<List<BoothListResponse>> getAllBooths(@UserId Long userId) {
+        // 비로그인일 경우 userId는 null
+        List<BoothListResponse> responseList = boothService.getAllBooths(userId);
+        return ResponseDto.ok(responseList);
     }
 }

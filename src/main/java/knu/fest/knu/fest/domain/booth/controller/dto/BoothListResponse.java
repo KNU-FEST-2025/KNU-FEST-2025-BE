@@ -7,15 +7,17 @@ public record BoothListResponse(
         String name,
         Integer boothNumber,
         Long waitingCount,
-        Long likeCount
+        Long likeCount,
+        boolean likedByMe // 로그인 사용자가 눌렀는지 여부
 ) {
-    public static BoothListResponse of(Booth booth) {
+    public static BoothListResponse of(Booth booth, boolean likedByMe) {
         return new BoothListResponse(
                 booth.getId(),
                 booth.getName(),
                 booth.getBoothNumber(),
                 booth.getWaitingCount(),
-                booth.getLikeCount()
+                booth.getLikeCount(),
+                likedByMe
         );
     }
 }
