@@ -40,6 +40,7 @@ public class Constants {
             "/api/v1/notice/**",
             "/api/v1/files/**",
             "/api/v1/waiting/{boothId}/public",
-            "/api/v1/waiting/{boothId}/subscribe"
+            "/api/v1/waiting/{boothId}/subscribe",
+            "/api/v1/subscribe/all"
     );
 }

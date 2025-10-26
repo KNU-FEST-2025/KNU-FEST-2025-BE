@@ -72,7 +72,7 @@ public class BoothController {
         return ResponseDto.ok(response);
     }
 
-    @GetMapping("")
+    @GetMapping("/booth")
     public ResponseDto<List<BoothListResponse>> getAllBooths(@UserId Long userId) {
         // 비로그인일 경우 userId는 null
         List<BoothListResponse> responseList = boothService.getAllBooths(userId);
