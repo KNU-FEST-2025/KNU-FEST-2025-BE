@@ -3,7 +3,7 @@ package knu.fest.knu.fest.domain.auth.service;
 import io.jsonwebtoken.Claims;
 import knu.fest.knu.fest.domain.auth.controller.dto.request.UserLoginRequest;
 import knu.fest.knu.fest.domain.auth.controller.dto.request.UserSignupRequest;
-import knu.fest.knu.fest.domain.auth.controller.dto.response.AccountLoginResponse;
+import knu.fest.knu.fest.domain.auth.controller.dto.response.UserLoginResponse;
 import knu.fest.knu.fest.domain.auth.controller.dto.response.TokenRefreshResponse;
 import knu.fest.knu.fest.domain.auth.repository.AuthRepository;
 import knu.fest.knu.fest.domain.user.entity.User;
@@ -47,7 +47,7 @@ public class AuthService{
                 );
     }
 
-    public AccountLoginResponse login(UserLoginRequest loginRequestDto) {
+    public UserLoginResponse login(UserLoginRequest loginRequestDto) {
         // 인증
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -74,14 +74,17 @@ public class AuthService{
             .findFirst()
             .map(GrantedAuthority::getAuthority)
                 .map(role -> role.startsWith("ROLE_") ? role.substring(5) : role)
-            .orElse(null); // 권한이 없는 경우 null 반환
+            .orElse("ROLE_USER"); // 권한이 없는 경우 null 반환
 
-        return AccountLoginResponse.builder()
-            .accountId(accountId)
-            .userRole(userRole)
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
-            .build();
+        String userNickname = userRepository.findNicknameByUserId(accountId);
+
+        return UserLoginResponse.builder()
+            .userId(accountId)
+                .nickname(userNickname)
+                .userRole(userRole)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     @Transactional(readOnly = true)

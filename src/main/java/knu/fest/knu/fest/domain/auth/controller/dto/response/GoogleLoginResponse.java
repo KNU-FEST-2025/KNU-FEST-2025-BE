@@ -8,7 +8,8 @@ import lombok.NonNull;
 
 @Builder
 public record GoogleLoginResponse(
-    @NonNull Long accountId,
+    @NonNull Long userId,
+    @NonNull String nickname,
     @NonNull String userRole,
     @NonNull String accessToken,
     @NonNull String refreshToken,

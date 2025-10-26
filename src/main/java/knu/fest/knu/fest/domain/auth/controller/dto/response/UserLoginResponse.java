@@ -4,8 +4,9 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record AccountLoginResponse(
-    @NonNull Long accountId,
+public record UserLoginResponse(
+    @NonNull Long userId,
+    @NonNull String nickname,
     @NonNull String userRole,
     @NonNull String accessToken,
     @NonNull String refreshToken
