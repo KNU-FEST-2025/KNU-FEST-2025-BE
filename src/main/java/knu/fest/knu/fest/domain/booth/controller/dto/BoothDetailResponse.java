@@ -12,10 +12,11 @@ public record BoothDetailResponse(
         Integer boothNumber,
         Long waitingCount,
         Long likeCount,
-        List<CommentResponse> comments
+        List<CommentResponse> comments,
+        boolean likedByMe
         // TODO: images, .. 등 추가 예정
 ) {
-    public static BoothDetailResponse of(Booth booth, List<CommentResponse> comments) {
+    public static BoothDetailResponse of(Booth booth, List<CommentResponse> comments, boolean likedByMe) {
         return new BoothDetailResponse(
                 booth.getId(),
                 booth.getName(),
@@ -23,7 +24,8 @@ public record BoothDetailResponse(
                 booth.getBoothNumber(),
                 booth.getWaitingCount(),
                 booth.getLikeCount(),
-                comments
+                comments,
+                likedByMe
         );
     }
 }

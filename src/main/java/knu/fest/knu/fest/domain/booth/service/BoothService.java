@@ -41,7 +41,7 @@ public class BoothService {
     }
 
     @Transactional
-    public BoothDetailResponse updateBooth(Long id, BoothUpdateRequest request) {
+    public BoothDetailResponse updateBooth(Long id, BoothUpdateRequest request, Long userId) {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
@@ -51,11 +51,16 @@ public class BoothService {
                 .map(CommentResponse::from)
                 .toList();
 
-        return BoothDetailResponse.of(booth, comments);
+        boolean likedByMe = false;
+        if (userId != null) {
+            likedByMe = likeRepository.existsByUserIdAndBoothId(userId, id);
+        }
+
+        return BoothDetailResponse.of(booth, comments, likedByMe);
     }
 
     @Transactional(readOnly = true)
-    public BoothDetailResponse getBooth(Long id) {
+    public BoothDetailResponse getBooth(Long id, Long userId) {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
@@ -64,7 +69,12 @@ public class BoothService {
                 .map(CommentResponse::from)
                 .toList();
 
-        return BoothDetailResponse.of(booth, comments);
+        boolean likedByMe = false;
+        if (userId != null) {
+            likedByMe = likeRepository.existsByUserIdAndBoothId(userId, id);
+        }
+
+        return BoothDetailResponse.of(booth, comments, likedByMe);
     }
 
     @Transactional(readOnly = true)
