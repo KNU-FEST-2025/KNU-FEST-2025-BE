@@ -3,6 +3,7 @@ package knu.fest.knu.fest.domain.waiting.service;
 import io.micrometer.common.lang.Nullable;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
 import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
+import knu.fest.knu.fest.domain.booth.service.BoothSseService;
 import knu.fest.knu.fest.domain.waiting.controller.dto.*;
 import knu.fest.knu.fest.domain.waiting.entity.Waiting;
 import knu.fest.knu.fest.domain.waiting.entity.WaitingStatus;
@@ -31,6 +32,7 @@ public class WaitingService {
     private final BoothRepository boothRepository;
     private final WaitingCacheService waitingCacheService;
     private final WaitingSseNotifier waitingSseNotifier;
+    private final BoothSseService boothSseService;
 
     @Transactional
     public WaitingRegisterResponse registerWaiting(WaitingRegisterRequest request) {
@@ -46,6 +48,9 @@ public class WaitingService {
                 waitingSseNotifier.notifyCount(request.boothId(), waitingCacheService.teamCount(request.boothId()));
             }
         });
+
+        boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
+
         return WaitingRegisterResponse.of(waitingId, request.nickName());
     }
 
@@ -54,6 +59,8 @@ public class WaitingService {
     public WaitingStatusResponse waitingCancel(Long boothId, Long waitingId) {
         Waiting waiting = waitingRepository.findByIdAndBoothId(waitingId, boothId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_WAITING));
+
+        Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         waiting.cancel();
 
@@ -65,6 +72,8 @@ public class WaitingService {
             }
         });
 
+        boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
+
         return WaitingStatusResponse.of(waiting);
     }
 
@@ -72,6 +81,8 @@ public class WaitingService {
     public WaitingStatusResponse waitingComplete(Long boothId, Long waitingId) {
         Waiting waiting = waitingRepository.findByIdAndBoothId(waitingId, boothId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_WAITING));
+
+        Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
 
         waiting.complete();
 
@@ -82,6 +93,8 @@ public class WaitingService {
                 waitingSseNotifier.notifyCount(boothId, waitingCacheService.teamCount(boothId));
             }
         });
+
+        boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
 
         return WaitingStatusResponse.of(waiting);
     }

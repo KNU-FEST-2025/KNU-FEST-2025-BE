@@ -1,5 +1,6 @@
 package knu.fest.knu.fest.domain.like.service;
 
+import knu.fest.knu.fest.domain.booth.service.BoothSseService;
 import knu.fest.knu.fest.domain.like.controller.dto.LikeRequest;
 import knu.fest.knu.fest.domain.like.controller.dto.LikeResponse;
 import knu.fest.knu.fest.domain.like.entity.Like;
@@ -26,6 +27,7 @@ public class LikeService {
     private final LikeCacheService likeCacheService;
     private final UserRepository userRepository;
     private final BoothRepository boothRepository;
+    private final BoothSseService boothSseService;
 
     /**
      * 좋아요 등록
@@ -55,6 +57,7 @@ public class LikeService {
         // boothCount + 1
         booth.addLike();
         boothRepository.save(booth);
+        boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override public void afterCommit() {
@@ -85,5 +88,7 @@ public class LikeService {
 
         booth.removeLike();
         boothRepository.save(booth);
+
+        boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
     }
 }
