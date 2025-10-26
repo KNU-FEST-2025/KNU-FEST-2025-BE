@@ -49,9 +49,10 @@ public class BoothController {
     @PutMapping("/admin/booth/{id}")
     public ResponseDto<BoothDetailResponse> updateBooth(
             @PathVariable Long id,
-            @Valid @RequestBody BoothUpdateRequest request
+            @Valid @RequestBody BoothUpdateRequest request,
+            @UserId Long userId
     ) {
-        BoothDetailResponse response = boothService.updateBooth(id, request);
+        BoothDetailResponse response = boothService.updateBooth(id, request, userId);
 
         return ResponseDto.ok(response);
     }
@@ -65,9 +66,10 @@ public class BoothController {
     )
     @GetMapping("/booth/{id}")
     public ResponseDto<BoothDetailResponse> getBooth(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            @UserId Long userId
     ) {
-        BoothDetailResponse response = boothService.getBooth(id);
+        BoothDetailResponse response = boothService.getBooth(id, userId);
 
         return ResponseDto.ok(response);
     }
