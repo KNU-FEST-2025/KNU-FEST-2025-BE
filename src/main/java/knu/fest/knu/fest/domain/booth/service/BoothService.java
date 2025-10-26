@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,15 +85,21 @@ public class BoothService {
     public List<BoothListResponse> getAllBooths(Long userId) {
         List<Booth> booths = boothRepository.findAll();
 
+        Set<Long> likedBoothIds = new HashSet<>();
+        if (userId != null) {
+            likedBoothIds.addAll(likeRepository.findAllBoothIdsByUserId(userId));
+        }
+
         return booths.stream()
-                .sorted(Comparator.comparingLong(Booth::getWaitingCount).reversed())
-                .map(booth -> {
-                    boolean likedByMe = false;
-                    if (userId != null) {
-                        likedByMe = likeRepository.existsByUserIdAndBoothId(userId, booth.getId());
-                    }
-                    return BoothListResponse.of(booth, likedByMe);
-                })
+                .map(booth -> BoothListResponse.of(
+                        booth,
+                        likedBoothIds.contains(booth.getId())
+                ))
+                .sorted(
+                        Comparator
+                                .comparing(BoothListResponse::likedByMe, Comparator.reverseOrder())
+                                .thenComparing(BoothListResponse::waitingCount, Comparator.reverseOrder())
+                )
                 .collect(Collectors.toList());
     }
 
