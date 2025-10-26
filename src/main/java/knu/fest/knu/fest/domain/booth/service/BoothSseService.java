@@ -30,7 +30,7 @@ public class BoothSseService {
     }
 
     public SseEmitter subscribeAllBooth() {
-        SseEmitter emitter = new SseEmitter(60_000L); // 60초 후 timeout
+        SseEmitter emitter = new SseEmitter(300_000L); // 60초 후 timeout
         allBoothEmitters.add(emitter);
 
         emitter.onCompletion(() -> allBoothEmitters.remove(emitter));

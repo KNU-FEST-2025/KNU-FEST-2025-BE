@@ -20,6 +20,8 @@ public class UserIdInterceptor implements HandlerInterceptor {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         request.setAttribute(Constants.USER_ID_ATTRIBUTE_NAME, userDetails.getUsername());
+
+        System.out.println(userDetails.getUsername());
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

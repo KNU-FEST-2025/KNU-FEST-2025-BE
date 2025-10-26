@@ -34,6 +34,7 @@ public class LikeService {
      * @param request LikeRequest DTO
      */
     public LikeResponse create(Long userId, LikeRequest request) {
+        System.out.println("userId: " + userId);
 
         boolean exists = likeRepository.existsByUserIdAndBoothId(userId, request.boothId());
         if (exists) {

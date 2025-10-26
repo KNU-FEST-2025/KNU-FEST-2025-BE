@@ -2,7 +2,7 @@ spring:
   application:
     name: knufest
   profiles:
-    active: local
+    active: dev
     group:
       local:
         - local
