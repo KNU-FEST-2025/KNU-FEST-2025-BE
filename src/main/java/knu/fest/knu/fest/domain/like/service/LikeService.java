@@ -6,11 +6,14 @@ import knu.fest.knu.fest.domain.like.entity.Like;
 import knu.fest.knu.fest.domain.like.repository.LikeRepository;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
 import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
+import knu.fest.knu.fest.domain.like.sse.LikeSseNotifier;
 import knu.fest.knu.fest.domain.user.entity.User;
 import knu.fest.knu.fest.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 
 @Service
@@ -19,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeService {
 
     private final LikeRepository likeRepository;
+    private final LikeSseNotifier likeSseNotifier;
+    private final LikeCacheService likeCacheService;
     private final UserRepository userRepository;
     private final BoothRepository boothRepository;
 
@@ -51,6 +56,13 @@ public class LikeService {
         booth.addLike();
         boothRepository.save(booth);
 
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override public void afterCommit() {
+                likeCacheService.enqueue(request.boothId(), like.getId());
+                likeSseNotifier.notifyCount(request.boothId(), likeCacheService.count(request.boothId()));
+            }
+        });
+
         return new LikeResponse(like.getId(), like.getBooth().getId(), like.getBooth().getLikeCount());
     }
 
@@ -62,6 +74,14 @@ public class LikeService {
         Booth booth = boothRepository.findByIdForUpdate(like.getBooth().getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스입니다."));
         likeRepository.delete(like);
+
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                likeCacheService.remove(request.boothId(), like.getId());
+                likeSseNotifier.notifyCount(request.boothId(), likeCacheService.count(request.boothId()));
+            }
+        });
 
         booth.removeLike();
         boothRepository.save(booth);
