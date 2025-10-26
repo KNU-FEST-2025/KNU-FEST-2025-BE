@@ -10,7 +10,7 @@ public class LikeCacheService {
 
     private final StringRedisTemplate redis;
 
-    private String keyQueue(Long boothId)   { return "waiting:booth:" + boothId + ":queue"; }
+    private String keyQueue(Long boothId)   { return "like:booth:" + boothId + ":queue"; }
 
     public void enqueue(Long boothId, Long likeId) {
         redis.opsForList().rightPush(keyQueue(boothId), likeId.toString());
