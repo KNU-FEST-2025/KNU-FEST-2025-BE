@@ -21,6 +21,12 @@ public class BoothAuthService {
         var principal = auth.getPrincipal();
         if (!(principal instanceof CustomUserDetails customUserDetails))
             throw new CommonException(ErrorCode.ACCESS_DENIED);
+        System.out.println("auth " + auth);
+        // admin 계정도 ok
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(ga -> "ROLE_ADMIN".equals(ga.getAuthority()) || "ADMIN".equals(ga.getAuthority()));
+        if (isAdmin) return;
+        // boothId에 해당하는 booth manager 존재하면 ok
         if (!boothManagerRepository.existsByBoothIdAndUserId(boothId, customUserDetails.getUserId())) {
             throw new CommonException(ErrorCode.ACCESS_DENIED);
         }
