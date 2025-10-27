@@ -8,6 +8,7 @@ build/
 ### SECRET ###
 src/main/resources/.env
 src/main/resources/application-test.yml
+src/main/resources/logback.xml
 
 ### STS ###
 .apt_generated
@@ -45,4 +46,5 @@ out/
 *.yml
 .env
 *.log
-logs/
+src/logs/
+resources/
