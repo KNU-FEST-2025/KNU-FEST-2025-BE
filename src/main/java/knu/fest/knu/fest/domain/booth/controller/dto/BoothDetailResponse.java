@@ -17,7 +17,7 @@ public record BoothDetailResponse(
         boolean likedByMe
         // TODO: images, .. 등 추가 예정
 ) {
-    public static BoothDetailResponse of(Booth booth, List<CommentResponse> comments, boolean likedByMe) {
+    public static BoothDetailResponse of(Booth booth, List<String> imagePath,List<CommentResponse> comments, boolean likedByMe) {
         return new BoothDetailResponse(
                 booth.getId(),
                 booth.getName(),
@@ -26,7 +26,7 @@ public record BoothDetailResponse(
                 booth.getWaitingCount(),
                 booth.getLikeCount(),
                 comments,
-                booth.getImagePath(),
+                imagePath,
                 likedByMe
         );
     }
