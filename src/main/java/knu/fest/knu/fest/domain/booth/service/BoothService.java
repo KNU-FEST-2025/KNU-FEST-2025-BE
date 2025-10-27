@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,14 +56,19 @@ public class BoothService {
         if (userId != null) {
             likedByMe = likeRepository.existsByUserIdAndBoothId(userId, id);
         }
+        // 지연 컬렉션 미리 터치해서 초기화
+        List<String> imagePaths = new ArrayList<>(booth.getImagePath()); // size() 호출 등도 OK
 
-        return BoothDetailResponse.of(booth, comments, likedByMe);
+        return BoothDetailResponse.of(booth, imagePaths, comments, likedByMe);
     }
 
     @Transactional(readOnly = true)
     public BoothDetailResponse getBooth(Long id, Long userId) {
         Booth booth = boothRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
+
+        // 지연 컬렉션 미리 터치해서 초기화
+        List<String> imagePaths = new ArrayList<>(booth.getImagePath()); // size() 호출 등도 OK
 
         List<CommentResponse> comments = commentRepository.findAllByBoothId(id)
                 .stream()
@@ -78,7 +80,7 @@ public class BoothService {
             likedByMe = likeRepository.existsByUserIdAndBoothId(userId, id);
         }
 
-        return BoothDetailResponse.of(booth, comments, likedByMe);
+        return BoothDetailResponse.of(booth,imagePaths, comments, likedByMe);
     }
 
     @Transactional(readOnly = true)

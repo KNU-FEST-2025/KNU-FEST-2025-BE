@@ -9,6 +9,7 @@ build/
 src/main/resources/.env
 src/main/resources/application-test.yml
 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -45,4 +46,5 @@ out/
 *.yml
 .env
 *.log
-logs/
+src/logs/
+resources/
