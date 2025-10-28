@@ -110,7 +110,7 @@ public class WaitingController {
     @GetMapping("/waiting")
     @Operation(summary = "공개 대기열 조회",
             description = "부스별 전체 대기열을 닉네임/상태/순번과 함께 조회합니다.")
-    public ResponseDto<List<PublicWaitingListItemResponse>> waitingPhoneNum(
+    public ResponseDto<List<WaitingMyPhoneResponse>> waitingPhoneNum(
             @RequestParam("phone") String phone
     ) {
         return ResponseDto.ok(waitingService.waitingPhoneNum(phone));
