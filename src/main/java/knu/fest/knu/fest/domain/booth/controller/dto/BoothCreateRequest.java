@@ -13,7 +13,9 @@ public record BoothCreateRequest(
         String description,
         @NotNull
         Integer boothNumber,
-        List<String> imagePath
+        List<String> imagePath,
+        Double longitude,
+        Double latitude
 ) {
 
     public Booth toEntity() {
@@ -21,6 +23,8 @@ public record BoothCreateRequest(
                 .name(name)
                 .description(description)
                 .boothNumber(boothNumber)
+                .longitude(longitude)
+                .latitude(latitude)
                 .build();
     }
 }

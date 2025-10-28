@@ -14,7 +14,9 @@ public record BoothDetailResponse(
         Long likeCount,
         List<CommentResponse> comments,
         List<String> imagePath,
-        boolean likedByMe
+        boolean likedByMe,
+        Double longitude,
+        Double latitude
         // TODO: images, .. 등 추가 예정
 ) {
     public static BoothDetailResponse of(Booth booth, List<String> imagePath,List<CommentResponse> comments, boolean likedByMe) {
@@ -27,7 +29,9 @@ public record BoothDetailResponse(
                 booth.getLikeCount(),
                 comments,
                 imagePath,
-                likedByMe
+                likedByMe,
+                booth.getLongitude(),
+                booth.getLatitude()
         );
     }
 }

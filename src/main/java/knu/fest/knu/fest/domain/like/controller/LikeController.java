@@ -31,7 +31,6 @@ public class LikeController {
             @UserId Long userId,
             @Valid @RequestBody LikeRequest request
     ) {
-        System.out.println("controller userId: " + userId);
         LikeResponse response = likeService.create(userId, request);
         return ResponseDto.created(response);
     }

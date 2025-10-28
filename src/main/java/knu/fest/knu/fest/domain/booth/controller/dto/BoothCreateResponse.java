@@ -10,7 +10,9 @@ public record BoothCreateResponse(
         String name,
         String description,
         Integer boothNumber,
-        List<String> imagePath
+        List<String> imagePath,
+        Double longitude,
+        Double latitude
 ) {
     public static BoothCreateResponse from(Booth booth) {
         return new BoothCreateResponse(
@@ -18,7 +20,9 @@ public record BoothCreateResponse(
                 booth.getName(),
                 booth.getDescription(),
                 booth.getBoothNumber(),
-                booth.getImagePath()
+                booth.getImagePath(),
+                booth.getLongitude(),
+                booth.getLatitude()
         );
     }
 }
