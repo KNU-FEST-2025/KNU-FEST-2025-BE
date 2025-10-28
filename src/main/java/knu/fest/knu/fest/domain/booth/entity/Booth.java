@@ -39,6 +39,12 @@ public class Booth extends BaseEntity {
     @Column(name = "like_count", nullable = false)
     private Long likeCount = 0L;
 
+    @Column(name = "longitude", nullable = false)
+    private Double longitude;
+
+    @Column(name = "latitude", nullable = false)
+    private Double latitude;
+
     // 사진 파일 경로 (또는 URL)
     @ElementCollection
     private List<String> imagePath = new ArrayList<>();
@@ -82,13 +88,22 @@ public class Booth extends BaseEntity {
     }
 
     @Builder
-    public Booth(String name, String description, Integer boothNumber, Long likeCount, Long waitingCount, List<String> imagePath) {
+    public Booth(String name,
+                 String description,
+                 Integer boothNumber,
+                 Long likeCount,
+                 Long waitingCount,
+                 List<String> imagePath,
+                 Double longitude,
+                 Double latitude) {
         this.name = name;
         this.description = description;
         this.boothNumber = boothNumber;
         this.likeCount = likeCount;
         this.waitingCount = waitingCount;
         this.imagePath = imagePath;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public void update(@NotBlank @Size(max = 120) String name, String description) {
