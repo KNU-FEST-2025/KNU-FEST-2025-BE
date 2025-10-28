@@ -8,7 +8,9 @@ public record BoothListResponse(
         Integer boothNumber,
         Long waitingCount,
         Long likeCount,
-        boolean likedByMe // 로그인 사용자가 눌렀는지 여부
+        boolean likedByMe, // 로그인 사용자가 눌렀는지 여부,
+        Double longitude,
+        Double latitude
 ) {
     public static BoothListResponse of(Booth booth, boolean likedByMe) {
         return new BoothListResponse(
@@ -17,7 +19,9 @@ public record BoothListResponse(
                 booth.getBoothNumber(),
                 booth.getWaitingCount(),
                 booth.getLikeCount(),
-                likedByMe
+                likedByMe,
+                booth.getLongitude(),
+                booth.getLatitude()
         );
     }
 }
