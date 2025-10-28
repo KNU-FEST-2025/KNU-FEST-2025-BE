@@ -18,7 +18,7 @@ public class Applicant extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long studentNum;
 
     @Column(nullable = false)

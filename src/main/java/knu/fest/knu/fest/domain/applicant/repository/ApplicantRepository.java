@@ -16,4 +16,6 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
     Optional<Applicant> findByDepartmentAndStudentNum(String department, Long studentNum);
 
     List<Applicant> findAllByRole(ApplicantRole role);
+
+    Optional<Applicant> findByStudentNumAndRole(Long studentNum, ApplicantRole role);
 }

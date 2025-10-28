@@ -22,7 +22,7 @@ public class ApplicantService {
     private final ApplicantRepository applicantRepository;
 
     public String createApplicant(ApplicantRequest request) {
-        boolean exists = applicantRepository.findByStudentNum(request.studentNum()).isPresent();
+        boolean exists = applicantRepository.findByStudentNumAndRole(request.studentNum(), request.role()).isPresent();
 
         if (exists) {
             throw new CommonException(ErrorCode.ALREADY_EXIST_APPLICANT);
@@ -41,7 +41,7 @@ public class ApplicantService {
     }
 
     public String updateApplicant(ApplicantUpdateRequest request) {
-        return applicantRepository.findByStudentNum(request.studentNum())
+        return applicantRepository.findById(request.id())
                 .map(applicant -> {
                     applicant.update(
                             request.name(),
@@ -55,8 +55,8 @@ public class ApplicantService {
     }
 
 
-    public String deleteApplicant(Long studentNum) {
-        return applicantRepository.findByStudentNum(studentNum)
+    public String deleteApplicant(Long id) {
+        return applicantRepository.findById(id)
                 .map(applicant -> {
                     applicantRepository.delete(applicant);
                     return "삭제완료";
