@@ -27,6 +27,9 @@ public class Waiting extends BaseEntity {
     @Column(nullable=false, length=15)
     private String phone;
 
+    @Column(nullable = false)
+    private Long waitingPeopleNum;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private WaitingStatus status = WaitingStatus.WAITING;
@@ -40,10 +43,11 @@ public class Waiting extends BaseEntity {
     }
 
     @Builder
-    public Waiting(Booth booth, String nickName, String phone) {
+    public Waiting(Booth booth, String nickName, String phone, Long waitingPeopleNum) {
         this.booth = booth;
         this.nickName = nickName;
         this.phone = phone;
+        this.waitingPeopleNum = waitingPeopleNum;
     }
 
     public void cancel() { this.status = WaitingStatus.CANCELLED; }

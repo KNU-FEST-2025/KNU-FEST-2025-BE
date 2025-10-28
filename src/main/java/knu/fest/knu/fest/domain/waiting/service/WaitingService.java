@@ -55,7 +55,7 @@ public class WaitingService {
 
         boothSseService.sendAllBoothUpdate(booth.getId(), booth.getLikeCount(), booth.getWaitingCount());
 
-        return WaitingRegisterResponse.of(waitingId, request.nickName());
+        return WaitingRegisterResponse.of(waitingId, request.nickName(), request.waitingPeopleNum());
     }
 
 
@@ -185,6 +185,7 @@ public class WaitingService {
                     w.getPhone(),       // 매니저는 전체 번호 조회 가능 (필요 시 마스킹)
                     w.getCreatedAt(),
                     w.getStatus(),
+                    w.getWaitingPeopleNum(),
                     order++             // 대기 순번 (1부터)
             ));
         }
