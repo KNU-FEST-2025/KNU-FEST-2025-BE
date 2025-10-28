@@ -33,8 +33,8 @@ public class ApplicantService {
     }
 
     @Transactional(readOnly = true)
-    public List<ApplicantResponse> getAllApplicants() {
-        return applicantRepository.findAll()
+    public List<ApplicantResponse> getRoleApplicants(ApplicantRole role) {
+        return applicantRepository.findAllByRole(role)
                 .stream()
                 .map(ApplicantResponse::from)
                 .toList();

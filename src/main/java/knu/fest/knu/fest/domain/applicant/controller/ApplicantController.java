@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import knu.fest.knu.fest.domain.applicant.controller.dto.ApplicantRequest;
 import knu.fest.knu.fest.domain.applicant.controller.dto.ApplicantResponse;
 import knu.fest.knu.fest.domain.applicant.controller.dto.ApplicantUpdateRequest;
+import knu.fest.knu.fest.domain.applicant.entity.ApplicantRole;
 import knu.fest.knu.fest.domain.applicant.service.ApplicantService;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,10 @@ public class ApplicantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ApplicantResponse>> getAllApplicants() {
-        return ResponseEntity.ok(applicantService.getAllApplicants());
+    public ResponseEntity<List<ApplicantResponse>> getRoleApplicants(
+            @RequestParam ApplicantRole role
+            ) {
+        return ResponseEntity.ok(applicantService.getRoleApplicants(role));
     }
 
     @PutMapping
