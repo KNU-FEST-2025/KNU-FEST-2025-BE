@@ -8,7 +8,8 @@ public class Constants {
     public static String USER_ROLE_CLAIM_NAME = "rol";
 
     public static List<String> ADMIN_AUTH_URLS = List.of(
-            "/api/v1/admin/notice/**"
+            "/api/v1/admin/notice/**",
+            "/api/v1/applicant"
     );
 
     public static List<String> BOOTH_ADMIN_AUTH_URLS = List.of(

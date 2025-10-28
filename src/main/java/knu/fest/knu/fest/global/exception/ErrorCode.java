@@ -27,6 +27,7 @@ public enum ErrorCode {
     INVALID_ARGUMENT(40002, HttpStatus.BAD_REQUEST, "유효하지 않은 인자입니다."),
     ALREADY_HAVE_LIKE(40003, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다."),
     ALREADY_EXIST_BOOTH_NUMBER(40004, HttpStatus.BAD_REQUEST, "이미 존재하는 부스 번호입니다."),
+    ALREADY_EXIST_APPLICANT(40005, HttpStatus.BAD_REQUEST, "이미 존재하는 응모자입니다."),
 
     // Access Denied Error
     ACCESS_DENIED(40300, HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
