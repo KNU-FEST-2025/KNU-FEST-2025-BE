@@ -52,9 +52,10 @@ public class Waiting extends BaseEntity {
 
     public void cancel() { this.status = WaitingStatus.CANCELLED; }
     public void complete() { this.status = WaitingStatus.DONE; }
-    public void update(String nickName, String phone) {
+    public void update(String nickName, String phone, Long waitingPeopleNum) {
         this.nickName = nickName;
         this.phone = phone;
+        this.waitingPeopleNum = waitingPeopleNum;
     }
 
 }
