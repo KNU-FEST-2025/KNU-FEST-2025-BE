@@ -2,7 +2,7 @@ spring:
   application:
     name: knufest
   profiles:
-    active: local
+    active: ${SPRING_ACTIVE_MODE}
     group:
       local:
         - local
