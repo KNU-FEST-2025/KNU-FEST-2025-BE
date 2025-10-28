@@ -1,6 +1,7 @@
 
 file:
   upload-dir: ${FILE_PATH}
+  schema: ${SCHEMA}
 
 
 server:

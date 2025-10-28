@@ -35,6 +35,9 @@ public class FileService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Value("${file.schema}")
+    private String schema;
+
     private static final Set<String> ALLOWED = Set.of(
             "image/jpeg", "image/png", "image/gif", "image/webp"
     );
@@ -92,7 +95,7 @@ public class FileService {
                     Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
                 }
 
-                savedPaths.add(target.toString());
+                savedPaths.add(schema + target);
             }
 
             if (savedPaths.isEmpty()) {
