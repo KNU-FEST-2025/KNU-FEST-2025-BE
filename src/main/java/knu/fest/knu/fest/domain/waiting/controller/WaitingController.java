@@ -107,7 +107,7 @@ public class WaitingController {
     /**
      *  일반 사용자용: 폰번호로 예약걸어둔 부스 조회 (닉네임, 상태, 순번)
      */
-    @GetMapping("/waiting")
+    @GetMapping("/waiting/phoneNumber")
     @Operation(summary = "공개 대기열 조회",
             description = "부스별 전체 대기열을 닉네임/상태/순번과 함께 조회합니다.")
     public ResponseDto<List<WaitingMyPhoneResponse>> waitingPhoneNum(

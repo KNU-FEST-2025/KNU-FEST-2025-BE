@@ -41,3 +41,10 @@ google:
   authorization-uri: ${GOOGLE_AUTHORIZATION_URI}
   token-uri: ${GOOGLE_TOKEN_URI}
   user-info-uri: ${GOOGLE_USER_INFO_URI}
+
+
+file:
+  upload-dir: ${FILE_PATH}
+  schema: ${SCHEMA}
+
+

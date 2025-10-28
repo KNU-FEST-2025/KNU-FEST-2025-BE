@@ -49,6 +49,7 @@ public class Constants {
             "/api/v1/subscribe/all",
             "/api/v1/like/subscribe/**",
             "/api/v1/waiting/subscribe/**",
-            "/api/v1/booth/subscribe/**"
+            "/api/v1/booth/subscribe/**",
+            "/api/v1/waiting/phoneNumber"
     );
 }

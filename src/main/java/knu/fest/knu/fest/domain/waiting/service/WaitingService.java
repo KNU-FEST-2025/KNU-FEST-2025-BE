@@ -221,7 +221,7 @@ public class WaitingService {
         List<WaitingMyPhoneResponse> response = new ArrayList<>();
         for (Waiting w: waitings){
             long boothId = w.getBooth().getId();
-            Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new IllegalArgumentException("해당 부스 존재하지 않음"));
+            Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
             String boothName = booth.getName();
             String imagePath = null;
             if (booth.getImagePath() != null){
