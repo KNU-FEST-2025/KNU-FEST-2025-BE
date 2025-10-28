@@ -121,7 +121,7 @@ public class WaitingService {
             throw new CommonException(ErrorCode.INVALID_ARGUMENT);
         }
 
-        waiting.update(request.nickName(), request.phone());
+        waiting.update(request.nickName(), request.phone(), request.waitingPeopleNum());
         return WaitingStatusResponse.of(waiting);
     }
 
