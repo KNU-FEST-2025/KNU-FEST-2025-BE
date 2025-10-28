@@ -2,6 +2,7 @@ package knu.fest.knu.fest.domain.booth.service;
 
 import knu.fest.knu.fest.domain.booth.controller.dto.*;
 import knu.fest.knu.fest.domain.booth.entity.Booth;
+import knu.fest.knu.fest.domain.booth.repository.BoothManagerRepository;
 import knu.fest.knu.fest.domain.booth.repository.BoothRepository;
 import knu.fest.knu.fest.domain.comment.controller.dto.CommentResponse;
 import knu.fest.knu.fest.domain.comment.repository.CommentRepository;
@@ -22,6 +23,7 @@ public class BoothService {
     private final BoothRepository boothRepository;
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
+    private final BoothManagerRepository boothManagerRepository;
 
     @Transactional
     public BoothCreateResponse createBooth(BoothCreateRequest request) {
@@ -105,6 +107,16 @@ public class BoothService {
                                 .thenComparing(BoothListResponse::waitingCount, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public BoothManagerResponse getBoothManagedByUser(Long userId) {
+        Booth booth = boothManagerRepository.findBoothByUserId(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
+
+        return new BoothManagerResponse(booth.getId(), booth.getName());
     }
 
 }

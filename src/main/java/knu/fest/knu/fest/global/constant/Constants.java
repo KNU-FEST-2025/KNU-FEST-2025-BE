@@ -17,7 +17,8 @@ public class Constants {
             "/api/v1/admin/lost-item",
             "/api/v1/admin/lost-item/**",
             "/api/v1/admin/waiting",
-            "/api/v1/admin/waiting/**"
+            "/api/v1/admin/waiting/**",
+            "/api/v1//admin/booth"
     );
 
     public static List<String> USER_AUTH_URLS = List.of(
