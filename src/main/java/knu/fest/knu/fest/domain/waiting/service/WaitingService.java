@@ -214,4 +214,42 @@ public class WaitingService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<WaitingMyPhoneResponse> waitingPhoneNum(String phone) {
+        List<Waiting> waitings = waitingRepository.findAllByPhoneAndStatus(phone, WaitingStatus.WAITING);
+
+        List<WaitingMyPhoneResponse> response = new ArrayList<>();
+        for (Waiting w: waitings){
+            long boothId = w.getBooth().getId();
+            Booth booth = boothRepository.findById(boothId).orElseThrow(() -> new IllegalArgumentException("해당 부스 존재하지 않음"));
+            String boothName = booth.getName();
+            String imagePath = null;
+            if (booth.getImagePath() != null){
+                imagePath = booth.getImagePath().get(0);
+            }
+
+            int cnt = 1;
+
+            List<Waiting> ws = waitingRepository
+                    .findAllByBoothIdAndStatusOrderByCreatedAtAsc(boothId, WaitingStatus.WAITING);
+
+            for (Waiting ww: ws) {
+                if (ww.getPhone().equals(phone)){
+                    break;
+                }
+                cnt += 1;
+            }
+
+            WaitingMyPhoneResponse re = WaitingMyPhoneResponse.builder()
+                    .boothId(boothId)
+                    .boothName(boothName)
+                    .imagePath(imagePath)
+                    .waitingNum(cnt)
+                    .build();
+            response.add(re);
+        }
+
+        return response;
+
+    }
 }

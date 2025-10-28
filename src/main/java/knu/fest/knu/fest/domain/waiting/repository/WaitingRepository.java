@@ -20,4 +20,6 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
     // DONE/CANCELLED용 조회
     List<Waiting> findAllByBoothIdAndStatusOrderByCreatedAtAsc(Long boothId, WaitingStatus status);
 
+    // 폰번호로 웨이팅 리스트 조회
+    List<Waiting> findAllByPhoneAndStatus(String phone, WaitingStatus status);
 }
