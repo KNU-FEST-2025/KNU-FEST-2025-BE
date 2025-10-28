@@ -8,13 +8,15 @@ import knu.fest.knu.fest.domain.waiting.entity.Waiting;
 public record WaitingRegisterRequest(
         @NotNull Long boothId,
         @NotBlank String nickName,
-        @NotBlank String phone
+        @NotBlank String phone,
+        @NotNull Long waitingPeopleNum
 ) {
     public Waiting toEntity(Booth booth) {
         return Waiting.builder()
                 .booth(booth)
                 .nickName(nickName)
                 .phone(phone)
+                .waitingPeopleNum(waitingPeopleNum)
                 .build();
     }
 }
