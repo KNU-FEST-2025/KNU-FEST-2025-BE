@@ -21,6 +21,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -162,34 +163,55 @@ public class WaitingService {
             Long boothId,
             @Nullable WaitingStatus statusFilter
     ) {
-        List<Long> ids = waitingCacheService.rangeAll(boothId);
-        if (ids.isEmpty()) return List.of();
+        // ① WAITING: 기존처럼 Redis 순서 기반
+        if (statusFilter == null || statusFilter == WaitingStatus.WAITING) {
+            List<Long> ids = waitingCacheService.rangeAll(boothId);
+            if (ids.isEmpty()) return List.of();
 
-        List<Waiting> rows = waitingRepository.findAllByIdIn(ids);
-        Map<Long, Waiting> map = rows.stream()
-                .collect(Collectors.toMap(Waiting::getId, w -> w));
+            List<Waiting> rows = waitingRepository.findAllByIdIn(ids);
+            Map<Long, Waiting> map = rows.stream()
+                    .collect(Collectors.toMap(Waiting::getId, w -> w));
 
-        List<PrivateWaitingListItemResponse> result = new ArrayList<>(ids.size());
-        int order = 1;
-        for (Long id : ids) {
-            Waiting w = map.get(id);
-            if (w == null) {
-                log.warn("Redis queue mismatch: waitingId={} not found in DB (boothId={})", id, boothId);
-                continue;
+            List<PrivateWaitingListItemResponse> result = new ArrayList<>(ids.size());
+            int order = 1;
+            for (Long id : ids) {
+                Waiting w = map.get(id);
+                if (w == null) {
+                    log.warn("Redis queue mismatch: waitingId={} not found in DB (boothId={})", id, boothId);
+                    continue;
+                }
+                // WAITING만 화면에 노출 (statusFilter==null도 WAITING 탭이라고 가정)
+                if (w.getStatus() != WaitingStatus.WAITING) continue;
+
+                result.add(PrivateWaitingListItemResponse.of(
+                        w.getId(),
+                        w.getNickName(),
+                        w.getPhone(),         // 필요시 마스킹 로직 적용
+                        w.getCreatedAt(),
+                        w.getStatus(),
+                        w.getWaitingPeopleNum(),
+                        order++               // Redis 순서 = 대기 순번
+                ));
             }
-            if (statusFilter != null && w.getStatus() != statusFilter) continue;
-
-            result.add(PrivateWaitingListItemResponse.of(
-                    w.getId(),          // waitingId
-                    w.getNickName(),
-                    w.getPhone(),       // 매니저는 전체 번호 조회 가능 (필요 시 마스킹)
-                    w.getCreatedAt(),
-                    w.getStatus(),
-                    w.getWaitingPeopleNum(),
-                    order++             // 대기 순번 (1부터)
-            ));
+            return result;
         }
-        return result;
+
+        // ② DONE / CANCELLED: DB 기준 조회 (createdAt 오름차순)
+        List<Waiting> rows = waitingRepository
+                .findAllByBoothIdAndStatusOrderByCreatedAtAsc(boothId, statusFilter);
+
+        AtomicInteger order = new AtomicInteger(1); // '순번' 개념이 없으므로, 시간순으로 가상의 순번 부여
+        return rows.stream()
+                .map(w -> PrivateWaitingListItemResponse.of(
+                        w.getId(),
+                        w.getNickName(),
+                        w.getPhone(),
+                        w.getCreatedAt(),
+                        w.getStatus(),
+                        w.getWaitingPeopleNum(),
+                        order.getAndIncrement()
+                ))
+                .toList();
     }
 
 }

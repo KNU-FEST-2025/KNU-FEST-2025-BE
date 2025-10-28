@@ -16,4 +16,8 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
     Optional<Waiting> findByIdAndBoothId(Long id, Long boothId);
 
     List<Waiting> findAllByIdIn(Collection<Long> ids);
+
+    // DONE/CANCELLED용 조회
+    List<Waiting> findAllByBoothIdAndStatusOrderByCreatedAtAsc(Long boothId, WaitingStatus status);
+
 }
