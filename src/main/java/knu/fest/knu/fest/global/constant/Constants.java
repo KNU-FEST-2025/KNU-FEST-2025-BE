@@ -9,6 +9,7 @@ public class Constants {
 
     public static List<String> ADMIN_AUTH_URLS = List.of(
             "/api/v1/admin/notice/**",
+            "/api/v1/applicant/**",
             "/api/v1/applicant"
     );
 

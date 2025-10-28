@@ -44,11 +44,11 @@ public class ApplicantController {
         return ResponseDto.ok(message);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseDto<String> deleteApplicant(
-            @RequestParam Long studentNum
+            @PathVariable Long id
     ) {
-        String message = applicantService.deleteApplicant(studentNum);
+        String message = applicantService.deleteApplicant(id);
         return ResponseDto.ok(message);
     }
 
