@@ -10,6 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.*;
 
 import static knu.fest.knu.fest.global.exception.ExceptionUtil.*;
 
@@ -18,48 +24,85 @@ import static knu.fest.knu.fest.global.exception.ExceptionUtil.*;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
-    // 개발자가 직접 정의한 예외
-    @ExceptionHandler(value = {CommonException.class})
+
+    private static final String GOOGLE_SHEET_WEBHOOK_URL =
+            "https://script.google.com/macros/s/AKfycbwunsc79fTh-fcE7NQ8UuESIO19zG6GmzvE6491aHml6onD7tXvFpQkMfikL7FJOljq/exec";
+
+    // 개발자가 정의한 예외
+    @ExceptionHandler(CommonException.class)
     public ResponseDto<?> handleApiException(CommonException e, HttpServletRequest req) {
-        String requestMethod = req.getMethod();
-        String requestURI = req.getRequestURI();
+        String user = getUserName();
+        String method = req.getMethod();
+        String uri = req.getRequestURI();
 
         log.error("GlobalExceptionHandler catch CommonException By User(id:{}) When [{}] {} In [{}] At {} : {}",
-                getUserName(),
-                requestMethod,
-                requestURI,
-                getMethodName(e),
-                getLineNumber(e),
-                e.getMessage());
+                user, method, uri, getMethodName(e), getLineNumber(e), e.getMessage());
+
+        sendErrorToGoogleSheet(user, method, uri, getSimpleName(e), e.getMessage(), getStackTraceAsString(e));
 
         return ResponseDto.fail(e);
     }
 
     // 서버, DB 예외
-    @ExceptionHandler(value = {Exception.class})
+    @ExceptionHandler(Exception.class)
     public ResponseDto<?> handleException(Exception e, HttpServletRequest req) {
-        String requestMethod = req.getMethod();
-        String requestURI = req.getRequestURI();
+        String user = getUserName();
+        String method = req.getMethod();
+        String uri = req.getRequestURI();
 
         log.error("GlobalExceptionHandler catch {} By User(id:{}) When [{}] {} In [{}] At {} : {}",
-                getSimpleName(e),
-                getUserName(),
-                requestMethod,
-                requestURI,
-                getMethodName(e),
-                getLineNumber(e),
-                e.getMessage());
+                getSimpleName(e), user, method, uri, getMethodName(e), getLineNumber(e), e.getMessage());
+
+        sendErrorToGoogleSheet(user, method, uri, getSimpleName(e), e.getMessage(), getStackTraceAsString(e));
 
         return ResponseDto.fail(new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
     }
 
+    /**
+     * Google Sheet로 에러 로그 전송
+     */
+    private void sendErrorToGoogleSheet(String user, String method, String uri,
+                                        String exception, String message, String stackTrace) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            Map<String, Object> body = new HashMap<>();
+            body.put("user", user);
+            body.put("method", method);
+            body.put("uri", uri);
+            body.put("exception", exception);
+            body.put("message", message);
+            body.put("stackTrace", stackTrace);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+            restTemplate.postForEntity(GOOGLE_SHEET_WEBHOOK_URL, entity, String.class);
+
+        } catch (Exception ex) {
+            log.error("Failed to send error log to Google Sheet: {}", ex.getMessage());
+        }
+    }
+
+    /**
+     * 예외의 StackTrace를 문자열로 변환
+     */
+    private String getShortStackTrace(Throwable e) {
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        String full = sw.toString();
+        int limit = Math.min(full.length(), 800);
+        return full.substring(0, limit);
+    }
+
     private String getUserName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal =  authentication.getPrincipal();
-        if(principal instanceof UserDetails userDetails) {
+        if (authentication == null) return "Anonymous";
+
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
             return userDetails.getUsername();
-        } else {
-            return "None";
         }
+        return "None";
     }
 }
