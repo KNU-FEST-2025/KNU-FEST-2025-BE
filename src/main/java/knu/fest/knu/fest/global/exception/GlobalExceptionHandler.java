@@ -27,7 +27,7 @@ import static knu.fest.knu.fest.global.exception.ExceptionUtil.*;
 public class GlobalExceptionHandler {
 
     @Value("${webhook.goole}")
-    private static final String webhook_url;
+    String webhook_url;
 
     // 개발자가 정의한 예외
     @ExceptionHandler(CommonException.class)
