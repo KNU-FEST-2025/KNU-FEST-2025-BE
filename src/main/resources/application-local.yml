@@ -1,3 +1,5 @@
+webhook:
+  goole: ${GOOGLE_SHEET_WEBHOOK_URL}
 
 file:
   upload-dir: ${FILE_PATH}

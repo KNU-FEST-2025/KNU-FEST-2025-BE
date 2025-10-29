@@ -1,6 +1,7 @@
 package knu.fest.knu.fest.domain.applicant.entity;
 
 public enum ApplicantRole {
-    STAR,
+    STAR1,
+    STAR2,
     UNIVERSE
 }
