@@ -9,7 +9,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "applicants")
+@Table(
+        name = "applicants",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"student_num", "role"})
+        }
+)
 public class Applicant extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

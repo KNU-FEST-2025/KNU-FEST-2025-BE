@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import knu.fest.knu.fest.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +26,8 @@ import static knu.fest.knu.fest.global.exception.ExceptionUtil.*;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    private static final String GOOGLE_SHEET_WEBHOOK_URL =
-            "https://script.google.com/macros/s/AKfycbwunsc79fTh-fcE7NQ8UuESIO19zG6GmzvE6491aHml6onD7tXvFpQkMfikL7FJOljq/exec";
+    @Value("${webhook.goole}")
+    private static final String webhook_url;
 
     // 개발자가 정의한 예외
     @ExceptionHandler(CommonException.class)
@@ -77,7 +78,7 @@ public class GlobalExceptionHandler {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-            restTemplate.postForEntity(GOOGLE_SHEET_WEBHOOK_URL, entity, String.class);
+            restTemplate.postForEntity(webhook_url, entity, String.class);
 
         } catch (Exception ex) {
             log.error("Failed to send error log to Google Sheet: {}", ex.getMessage());
@@ -87,7 +88,7 @@ public class GlobalExceptionHandler {
     /**
      * 예외의 StackTrace를 문자열로 변환
      */
-    private String getShortStackTrace(Throwable e) {
+    private String getStackTraceAsString(Throwable e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));
         String full = sw.toString();
