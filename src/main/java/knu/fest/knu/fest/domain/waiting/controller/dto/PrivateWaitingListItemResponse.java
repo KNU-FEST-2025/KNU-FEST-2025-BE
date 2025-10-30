@@ -8,7 +8,7 @@ public record PrivateWaitingListItemResponse(
         Long waitingId,
         String nickName,
         String phone,
-        LocalDateTime modifiedAt,
+        LocalDateTime registrationDate,
         WaitingStatus status,
         Long waitingPeopleNum,
         int order
@@ -18,7 +18,7 @@ public record PrivateWaitingListItemResponse(
             Long waitingId,
             String nickName,
             String phone,
-            LocalDateTime modifiedAt,
+            LocalDateTime registrationDate,
             WaitingStatus status,
             Long waitingPeopleNum,
             int order
@@ -27,7 +27,7 @@ public record PrivateWaitingListItemResponse(
                 waitingId,
                 nickName,
                 phone,
-                modifiedAt,
+                registrationDate,
                 status,
                 waitingPeopleNum,
                 order);
