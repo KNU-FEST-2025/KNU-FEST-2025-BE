@@ -39,6 +39,9 @@ public class Booth extends BaseEntity {
     @Column(name = "like_count", nullable = false)
     private Long likeCount = 0L;
 
+    @Column(name = "comment_count", nullable = false)
+    private Long commentCount = 0L;
+
     @Column(name = "longitude", nullable = false)
     private Double longitude;
 
@@ -87,12 +90,24 @@ public class Booth extends BaseEntity {
         }
     }
 
+    public void addComment() {
+        this.commentCount += 1;
+    }
+
+    public void removeComment() {
+        if (this.commentCount > 0) {
+            this.commentCount -= 1;
+        }
+    }
+
+
     @Builder
     public Booth(String name,
                  String description,
                  Integer boothNumber,
                  Long likeCount,
                  Long waitingCount,
+                 Long commentCount,
                  List<String> imagePath,
                  Double longitude,
                  Double latitude) {
@@ -101,6 +116,7 @@ public class Booth extends BaseEntity {
         this.boothNumber = boothNumber;
         this.likeCount = likeCount;
         this.waitingCount = waitingCount;
+        this.commentCount = commentCount;
         this.imagePath = imagePath;
         this.longitude = longitude;
         this.latitude = latitude;

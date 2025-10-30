@@ -104,7 +104,8 @@ public class BoothService {
                 .sorted(
                         Comparator
                                 .comparing(BoothListResponse::likedByMe, Comparator.reverseOrder())
-                                .thenComparing(BoothListResponse::waitingCount, Comparator.reverseOrder())
+                                .thenComparing(booth -> booth.likeCount() + booth.waitingCount() + booth.commentCount(),
+                                        Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
     }
