@@ -29,6 +29,7 @@ public class Constants {
     );
 
     public static List<String> NO_NEED_OR_USER_AUTH_URLS = List.of(
+            "/api/v1/booth/*",
             "/api/v1/booth"
     );
 
@@ -41,7 +42,7 @@ public class Constants {
             "/swagger-ui/**",
             "/v3/api-docs/**",
 
-            "/api/v1/booth/*",
+
             "/api/v1/lost-item/user/**",
             "/api/v1/notice/**",
             "/api/v1/files/**",
