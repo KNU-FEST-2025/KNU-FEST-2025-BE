@@ -15,7 +15,7 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
     // 학과와 학번으로 특정 응모자 조회 (삭제용)
     Optional<Applicant> findByDepartmentAndStudentNum(String department, Long studentNum);
 
-    List<Applicant> findAllByRole(ApplicantRole role);
+    List<Applicant> findAllByRoleOrderByModifiedAtDesc(ApplicantRole role);
 
     Optional<Applicant> findByStudentNumAndRole(Long studentNum, ApplicantRole role);
 }

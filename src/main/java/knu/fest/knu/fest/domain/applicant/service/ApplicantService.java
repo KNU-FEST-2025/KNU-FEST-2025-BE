@@ -34,7 +34,7 @@ public class ApplicantService {
 
     @Transactional(readOnly = true)
     public List<ApplicantResponse> getRoleApplicants(ApplicantRole role) {
-        return applicantRepository.findAllByRole(role)
+        return applicantRepository.findAllByRoleOrderByModifiedAtDesc(role)
                 .stream()
                 .map(ApplicantResponse::from)
                 .toList();
