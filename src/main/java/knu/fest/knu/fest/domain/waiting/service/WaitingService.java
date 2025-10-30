@@ -187,7 +187,7 @@ public class WaitingService {
                         w.getId(),
                         w.getNickName(),
                         w.getPhone(),         // 필요시 마스킹 로직 적용
-                        w.getCreatedAt(),
+                        w.getModifiedAt(),
                         w.getStatus(),
                         w.getWaitingPeopleNum(),
                         order++               // Redis 순서 = 대기 순번
@@ -206,7 +206,7 @@ public class WaitingService {
                         w.getId(),
                         w.getNickName(),
                         w.getPhone(),
-                        w.getCreatedAt(),
+                        w.getModifiedAt(),
                         w.getStatus(),
                         w.getWaitingPeopleNum(),
                         order.getAndIncrement()
