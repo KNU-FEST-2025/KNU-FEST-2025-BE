@@ -30,6 +30,7 @@ public class CommentService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         Booth booth = boothRepository.findById(boothId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOOTH));
+        booth.addComment();
 
         Comment comment = Comment.builder()
                 .booth(booth)
@@ -52,6 +53,9 @@ public class CommentService {
         if (!comment.isOwner(userId) && !user.isAdmin()) {
             throw new CommonException(ErrorCode.COMMENT_EDIT_FORBIDDEN);
         }
+
+        Booth booth = comment.getBooth();
+        booth.removeComment();
 
         commentRepository.delete(comment);
     }

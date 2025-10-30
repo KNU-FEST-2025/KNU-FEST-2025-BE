@@ -8,6 +8,7 @@ public record BoothListResponse(
         Integer boothNumber,
         Long waitingCount,
         Long likeCount,
+        Long commentCount,
         boolean likedByMe, // 로그인 사용자가 눌렀는지 여부,
         Double longitude,
         Double latitude
@@ -19,6 +20,7 @@ public record BoothListResponse(
                 booth.getBoothNumber(),
                 booth.getWaitingCount(),
                 booth.getLikeCount(),
+                booth.getCommentCount(),
                 likedByMe,
                 booth.getLongitude(),
                 booth.getLatitude()
